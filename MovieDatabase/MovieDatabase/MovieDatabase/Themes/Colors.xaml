@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary 
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="MovieDatabase.Themes.Colors">
+
+    <Color x:Key="backgroundDark">#1b242c</Color>
+    <Color x:Key="textDark">#ffffff</Color>
+    
+    <Color x:Key="backgroundLight">#ffffff</Color>
+    <Color x:Key="textLight">#000000</Color>
+
+    <Color x:Key="green">#237A57</Color>
+    
+</ResourceDictionary>
