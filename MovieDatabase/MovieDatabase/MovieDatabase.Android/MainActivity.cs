@@ -5,6 +5,8 @@ using Android.Content.PM;
 using Android.Runtime;
 using Android.OS;
 
+using Firebase;
+
 namespace MovieDatabase.Droid
 {
     [Activity(Label = "MovieDatabase", Icon = "@mipmap/launcher_icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode | ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize )]
@@ -13,6 +15,12 @@ namespace MovieDatabase.Droid
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
+
+
+            if (FirebaseApp.GetApps(Application.Context).Count == 0)
+            {
+                FirebaseApp.InitializeApp(Application.Context);
+            }
 
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
