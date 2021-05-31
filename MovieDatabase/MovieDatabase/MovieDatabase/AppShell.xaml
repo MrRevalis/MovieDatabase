@@ -6,9 +6,9 @@
        FlyoutBehavior="Disabled"
        x:Class="MovieDatabase.AppShell">
 
-    <TabBar>
+    <ShellItem Route="login">
         <ShellContent
-            ContentTemplate="{DataTemplate local:TestPage}"/>
-    </TabBar>
-    
+            ContentTemplate="{DataTemplate local:LoginPage}"/>
+    </ShellItem>
+
 </Shell>

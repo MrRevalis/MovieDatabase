@@ -1,12 +1,17 @@
-﻿using System;
+﻿using MovieDatabase.Services;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using Xamarin.Essentials;
+using Xamarin.Forms;
 
 namespace MovieDatabase.ViewModels
 {
     public class BaseViewModel : INotifyPropertyChanged
     {
+        public IFirebase FirebaseAuth => DependencyService.Get<IFirebase>();
+
         bool isBusy = false;
         public bool IsBusy
         {
@@ -45,5 +50,38 @@ namespace MovieDatabase.ViewModels
             changed.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         #endregion
+
+        //Connectivity
+        private bool isNotConnected;
+        public bool IsNotConnected
+        {
+            get => isNotConnected;
+            set => SetProperty(ref isNotConnected, value);
+        }
+
+        public BaseViewModel()
+        {
+            Connectivity.ConnectivityChanged += ConnectionChanged;
+            IsNotConnected = Connectivity.NetworkAccess != NetworkAccess.Internet;
+        }
+
+        ~BaseViewModel()
+        {
+            Connectivity.ConnectivityChanged -= ConnectionChanged;
+        }
+
+        private async void ConnectionChanged(object sender, ConnectivityChangedEventArgs e)
+        {
+            IsNotConnected = e.NetworkAccess != NetworkAccess.Internet;
+            var currentPage = Shell.Current.CurrentItem.Route;
+            if (currentPage != "login" && IsNotConnected == true)
+            {
+                await Shell.Current.GoToAsync($"//{currentPage}/internet");
+            }
+            else
+            {
+                await Shell.Current.GoToAsync("..");
+            }
+        }
     }
 }

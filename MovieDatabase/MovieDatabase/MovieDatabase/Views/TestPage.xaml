@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:MovieDatabase.CustomControls"
              x:Class="MovieDatabase.Views.TestPage"
              Title="Test Page">
     <ContentPage.Content>
@@ -8,6 +9,9 @@
             <Label Text="TestPage"
                 VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand" />
+            <controls:EntryIcon
+                Placeholder="TEST"
+                Image="ic_action_email"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

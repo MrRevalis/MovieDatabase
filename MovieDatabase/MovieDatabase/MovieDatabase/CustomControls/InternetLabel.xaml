@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<StackLayout xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MovieDatabase.CustomControls.InternetLabel"
+             IsVisible="{Binding IsNotConnected}">
+    <Frame
+        CornerRadius="15"
+        BackgroundColor="{AppThemeBinding Dark={StaticResource backgroundLight}, Light={StaticResource backgroundDark}}">
+        <Label
+            Text="Oops, looks like you don't have internet connection :("
+            TextColor="Red"
+            FontSize="Medium"
+            HorizontalTextAlignment="Center"
+            HorizontalOptions="Center"
+            VerticalOptions="Center"/>
+    </Frame>
+</StackLayout>

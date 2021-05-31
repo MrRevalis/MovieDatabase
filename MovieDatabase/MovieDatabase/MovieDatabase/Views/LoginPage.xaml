@@ -1,0 +1,143 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:MovieDatabase.ViewModels"
+             xmlns:cu="clr-namespace:MovieDatabase.CustomControls"
+             xmlns:bh="clr-namespace:MovieDatabase.Behaviors"
+             x:Class="MovieDatabase.Views.LoginPage"
+             Shell.NavBarIsVisible="False">
+
+    <ContentPage.BindingContext>
+        <vm:LoginViewModel/>
+    </ContentPage.BindingContext>
+
+    <ContentPage.Padding>
+        <OnPlatform
+            x:TypeArguments="Thickness">
+            <OnPlatform.iOS>0, 20, 0, 0</OnPlatform.iOS>
+            <OnPlatform.Android>0, 0, 0, 0</OnPlatform.Android>
+        </OnPlatform>
+    </ContentPage.Padding>
+
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition
+                    Height="Auto"/>
+                <RowDefinition
+                    Height="*"/>
+                <RowDefinition
+                    Height="60"/>
+            </Grid.RowDefinitions>
+            <Frame
+                BorderColor="Transparent"
+                HasShadow="False"
+                Grid.Row="0">
+                <Frame.Background>
+                    <LinearGradientBrush
+                        EndPoint="0,1">
+                        <GradientStop 
+                            Color="{AppThemeBinding Dark={StaticResource green}, Light={StaticResource backgroundLight}}"
+                            Offset="0.1"/>
+                        <GradientStop 
+                            Color="{AppThemeBinding Dark={StaticResource backgroundDark}, Light={StaticResource green}}"
+                            Offset="1.0"/>
+                    </LinearGradientBrush>
+                </Frame.Background>
+                <StackLayout>
+                    <Image
+                        Source="{AppThemeBinding Dark=movieBaseDark.png, Light=movieBaseLight.png}"
+                        HorizontalOptions="Center"/>
+                    <Label
+                        Text="Organiser"
+                        FontSize="Large"
+                        FontAttributes="Bold"
+                        HorizontalOptions="Center"/>
+                </StackLayout>
+            </Frame>
+
+            <Grid
+                Grid.Row="1"
+                VerticalOptions="Start"
+                HorizontalOptions="FillAndExpand"
+                Margin="20"
+                RowSpacing="20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Label
+                    Grid.Row="0"
+                    Text="Login"
+                    FontSize="Large"
+                    FontAttributes="Bold"
+                    VerticalOptions="Start"
+                    HorizontalOptions="Center"/>
+                <cu:EntryIcon
+                    Grid.Row="1"
+                    Placeholder="Email"
+                    Text="{Binding Email}"
+                    Image="{AppThemeBinding Dark=ic_action_email_dark, Light=ic_action_email_light}">
+                    <cu:EntryIcon.Behaviors>
+                        <bh:EmailValidation/>
+                    </cu:EntryIcon.Behaviors>
+                </cu:EntryIcon>
+                <cu:EntryIcon
+                    Grid.Row="2"
+                    IsPassword="True"
+                    Placeholder="Password"
+                    Text="{Binding Password}"
+                    Image="{AppThemeBinding Dark=ic_action_lock_dark, Light=ic_action_lock_light}"/>
+                <Button
+                    Text="Login"
+                    Command="{Binding Login}"
+                    HorizontalOptions="Center"
+                    BorderRadius="15"
+                    Grid.Row="3">
+                    <Button.Triggers>
+                        <DataTrigger
+                            TargetType="Button"
+                            Binding="{Binding IsBusy}"
+                            Value="True">
+                            <Setter Property="IsEnabled" Value="False"/>
+                            <Setter Property="Text" Value=""/>
+                        </DataTrigger>
+                    </Button.Triggers>
+                </Button>
+                <ActivityIndicator
+                    IsVisible="{Binding IsBusy}"
+                    IsRunning="{Binding IsBusy}"
+                    Color="White"
+                    Grid.Row="3"
+                    InputTransparent="True"/>
+                <cu:InternetLabel Grid.Row="4"/>
+            </Grid>
+            <StackLayout
+                Grid.Row="2">
+                <Label
+                    Text="Create new account"
+                    FontSize="Body"
+                    VerticalOptions="FillAndExpand"
+                    VerticalTextAlignment="Center"
+                    HorizontalTextAlignment="Center">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer
+                            Command="{Binding Register}"/>
+                    </Label.GestureRecognizers>
+                    <Label.Triggers>
+                        <DataTrigger
+                            TargetType="Label"
+                            Binding="{Binding IsBusy}"
+                            Value="True">
+                            <Setter Property="IsEnabled" Value="False"/>
+                        </DataTrigger>
+                    </Label.Triggers>
+                </Label>
+            </StackLayout>
+        </Grid>
+    </ContentPage.Content>
+    
+</ContentPage>

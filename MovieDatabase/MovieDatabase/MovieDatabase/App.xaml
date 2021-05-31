@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Application xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:cu="clr-namespace:MovieDatabase.CustomControls"
              x:Class="MovieDatabase.App">
     <!--
         Define global resources and styles here, that apply to all pages in your app.
@@ -35,7 +36,25 @@
             </Style>
 
             <Style BasedOn="{StaticResource BaseStyle}" TargetType="TabBar" />
-            
+
+            <Style TargetType="Button">
+                <Setter Property="BackgroundColor" Value="{StaticResource green}"/>
+                <Setter Property="TextColor" Value="White"/>
+                <Setter Property="WidthRequest" Value="180"/>
+                <Setter Property="HeightRequest" Value="40"/>
+                <Setter Property="FontSize" Value="Medium"/>
+            </Style>
+
+            <Style TargetType="cu:EntryIcon">
+                <Setter Property="BorderColor" Value="{AppThemeBinding Dark=#215461 ,Light=#000000}"/>
+                <Setter Property="BackgroundColor" Value="#0DFFFFFF"/>
+                <Setter Property="ImageWidth" Value="35"/>
+                <Setter Property="ImageHeight" Value="35"/>
+                <Setter Property="CornerRadius" Value="8"/>
+                <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="PlaceholderColor" Value="{AppThemeBinding Dark=#ffffff, Light=#000000}"/>
+            </Style>
+
         </ResourceDictionary>
     </Application.Resources>
     
