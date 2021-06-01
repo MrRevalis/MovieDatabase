@@ -1,4 +1,5 @@
-﻿using Xamarin.Forms;
+﻿using MovieDatabase.Services;
+using Xamarin.Forms;
 
 namespace MovieDatabase
 {
@@ -8,6 +9,9 @@ namespace MovieDatabase
         public App()
         {
             InitializeComponent();
+
+            DependencyService.Register<IMovieDB, MovieDB>();
+
             MainPage = new AppShell();
         }
 

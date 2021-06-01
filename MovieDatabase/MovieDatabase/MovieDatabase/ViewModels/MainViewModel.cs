@@ -1,12 +1,18 @@
-﻿using System;
+﻿using MovieDatabase.Extensions;
+using MovieDatabase.Models;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Input;
+using Xamarin.CommunityToolkit.ObjectModel;
+using Xamarin.Forms;
 
 namespace MovieDatabase.ViewModels
 {
     public class MainViewModel : BaseViewModel
     {
-        private IMovieDB movieDB;
         private string lastItemID;
         private string typeItem;
         #region Command
@@ -61,7 +67,6 @@ namespace MovieDatabase.ViewModels
 
         public MainViewModel()
         {
-            movieDB = DependencyService.Get<IMovieDB>();
 
             TrendingList = new ObservableRangeCollection<SearchItem>();
             Types = new List<string>() { "Action", "Adventure", "Animation", "Comedy", "Crime", "Documentary", "Drama", "Family", "Fantasy", "History", "Horror", "Music", "Mystery", "Romance", "Science Fiction", "TV Movie", "Thriller", "War", "Western" };
@@ -130,11 +135,10 @@ namespace MovieDatabase.ViewModels
         {
             IsBusy = true;
 
-            List<SearchItem> trending = await movieDB.TrendingList("all", "week");
+            List<SearchItem> trending = await MovieDB.TrendingList("all", "week");
             if (trending != null && trending.Any())
             {
                 TrendingList.RemoveAll();
-
                 var amount = trending.Count < 5 ? trending.Count : 5;
                 TrendingList.AddRange(trending.Take(amount));
             }
@@ -150,14 +154,14 @@ namespace MovieDatabase.ViewModels
 
         private async Task CompleteCarousel()
         {
-            List<Genre> genres = await movieDB.MoviesGenres();
+            List<Genres> genres = await MovieDB.MoviesGenres();
             if (genres != null && genres.Any())
             {
                 //Types.AddRange(genres.Select(x => x.name).ToList());
-                foreach (Genre item in genres)
+                foreach (Genres item in genres)
                 {
-                    List<SearchItem> genreList = await movieDB.MoviesList(item.id);
-                    MoviesCollection.Add(item.name, genreList);
+                    List<SearchItem> genreList = await MovieDB.MoviesList(item.ID);
+                    MoviesCollection.Add(item.Name, genreList);
                 }
             }
         }

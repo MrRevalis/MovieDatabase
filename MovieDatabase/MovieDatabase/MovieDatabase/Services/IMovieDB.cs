@@ -1,6 +1,8 @@
-﻿using System;
+﻿using MovieDatabase.Models;
+using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace MovieDatabase.Services
 {
@@ -11,7 +13,7 @@ namespace MovieDatabase.Services
         Task<List<SearchItem>> SearchTV(string title);
         Task<DetailItem> MovieDetail(string ID);
         Task<DetailItem> TvDetail(string ID);
-        Task<List<Genre>> MoviesGenres();
+        Task<List<Genres>> MoviesGenres();
         Task<List<SearchItem>> MoviesList(int ID);
         Task<List<CastDetail>> MovieCast(string ID);
         Task<List<CastDetail>> TvCast(string ID);

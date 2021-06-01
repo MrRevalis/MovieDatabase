@@ -2,17 +2,152 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:MovieDatabase.ViewModels"
-             x:Class="MovieDatabase.Views.MainPage">
+             xmlns:cv="clr-namespace:MovieDatabase.Converters"
+             xmlns:cu="clr-namespace:MovieDatabase.CustomControls"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             x:Class="MovieDatabase.Views.MainPage"
+             x:Name="mainPage">
 
     <ContentPage.BindingContext>
         <vm:MainViewModel/>
     </ContentPage.BindingContext>
 
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <cv:LabelClickedConverter x:Key="LabelClickedConverter"/>
+            <xct:ItemSelectedEventArgsConverter x:Key="ItemSelectedEventArgsConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.Behaviors>
+        <xct:EventToCommandBehavior
+            EventName="Appearing"
+            Command="{Binding AppearingCommand}"/>
+    </ContentPage.Behaviors>
+
+    <Shell.TitleView>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <ImageButton Grid.Column="0" Source="ic_action_search.png" Scale="0.8" HorizontalOptions="Start" BackgroundColor="Transparent" Command="{Binding SearchPageCommand}"/>
+            <Label Grid.Column="1" Text="Discover" HorizontalOptions="Center" VerticalOptions="Center" FontSize="Medium" FontAttributes="Bold"/>
+            <ImageButton Grid.Column="2" Source="ic_action_logout.png" Scale="0.8" HorizontalOptions="End" BackgroundColor="Transparent" Command="{Binding SignOutCommand}"/>
+        </Grid>
+    </Shell.TitleView>
+
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Main"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="45"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <CarouselView Grid.Row="0" ItemsSource="{Binding TrendingList}" IndicatorView="indicatorView" VerticalOptions="FillAndExpand" HeightRequest="200">
+                <CarouselView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <Image Source="{Binding Background}" Grid.Row="0" Aspect="Fill"/>
+                            <Label Text="{Binding Title}" Grid.Row="0" VerticalOptions="End" HorizontalOptions="Start" Padding="20" FontSize="Large"/>
+
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer 
+                                        Command="{Binding ChangePageCommand, Source={RelativeSource AncestorType={x:Type vm:MainViewModel}}}"
+                                        CommandParameter="{Binding .}"/>
+                            </Grid.GestureRecognizers>
+                        </Grid>
+                    </DataTemplate>
+                </CarouselView.ItemTemplate>
+            </CarouselView>
+            <IndicatorView Grid.Row="0" x:Name="indicatorView" IndicatorsShape="Circle" IndicatorColor="White" SelectedIndicatorColor="{StaticResource green}" VerticalOptions="End" Margin="10"/>
+
+            <CarouselView
+                Grid.Row="1"
+                PeekAreaInsets="150"
+                ItemsSource="{Binding Types}"
+                CurrentItem="{Binding CurrentItemType}"
+                CurrentItemChangedCommand="{Binding ChangeTypeCommand}"
+                CurrentItemChangedCommandParameter="{Binding Source={RelativeSource Self}, Path=CurrentItem}">
+                <CarouselView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Padding="5">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Label Text="{Binding .}" VerticalOptions="Center" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Center" x:Name="typeLabel" FontSize="Medium" Grid.Row="0">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Source={x:Reference mainPage}, Path=BindingContext.ChangeTypeCommand}" CommandParameter="{Binding .}"/>
+                                </Label.GestureRecognizers>
+                            </Label>
+                            <BoxView
+                                Grid.Row="1"
+                                BackgroundColor="{Binding Source={x:Reference mainPage}, Path=BindingContext.CurrentItemType, Converter={StaticResource LabelClickedConverter}, ConverterParameter={x:Reference Name=typeLabel}}"
+                                HeightRequest="5"/>
+                        </Grid>
+                    </DataTemplate>
+                </CarouselView.ItemTemplate>
+
+            </CarouselView>
+
+            <SwipeView Grid.Row="2">
+
+                <SwipeView.LeftItems>
+                    <SwipeItems Mode="Execute" SwipeBehaviorOnInvoked="Auto">
+                        <SwipeItem Command="{Binding SwipeCommand}">
+                            <SwipeItem.CommandParameter>
+                                <x:Int32>-1</x:Int32>
+                            </SwipeItem.CommandParameter>
+                        </SwipeItem>
+                    </SwipeItems>
+                </SwipeView.LeftItems>
+
+                <SwipeView.RightItems>
+                    <SwipeItems Mode="Execute" SwipeBehaviorOnInvoked="Auto">
+                        <SwipeItem Command="{Binding SwipeCommand}">
+                            <SwipeItem.CommandParameter>
+                                <x:Int32>1</x:Int32>
+                            </SwipeItem.CommandParameter>
+                        </SwipeItem>
+                    </SwipeItems>
+                </SwipeView.RightItems>
+
+                <CollectionView ItemsSource="{Binding ActualMovies}">
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout Orientation="Vertical" Span="2"/>
+                    </CollectionView.ItemsLayout>
+
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Padding="10">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="260"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <Image Source="{Binding Background}" Grid.Row="0" Aspect="Fill"/>
+                                <Label Text="{Binding Title}" FontSize="Body" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Grid.Row="1"/>
+
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer 
+                                        Command="{Binding ChangePageCommand, Source={RelativeSource AncestorType={x:Type vm:MainViewModel}}}"
+                                        CommandParameter="{Binding .}"/>
+                                </Grid.GestureRecognizers>
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+
+                </CollectionView>
+            </SwipeView>
+
+            <cu:LoadingScreen
+                ShouldWork="{Binding IsBusy}"
+                Grid.Row="2"/>
+            
+        </Grid>
     </ContentPage.Content>
 </ContentPage>

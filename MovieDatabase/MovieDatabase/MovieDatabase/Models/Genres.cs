@@ -4,7 +4,7 @@ using System.Text;
 
 namespace MovieDatabase.Models
 {
-    public class Genre
+    public class Genres
     {
         public int ID { get; set; }
         public string Name { get; set; }

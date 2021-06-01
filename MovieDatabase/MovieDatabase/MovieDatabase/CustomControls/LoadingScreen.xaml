@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Frame
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="MovieDatabase.CustomControls.LoadingScreen"
+    x:Name="frame"
+    HorizontalOptions="FillAndExpand"
+    VerticalOptions="FillAndExpand"
+    BackgroundColor="{StaticResource backgroundDark}">
+    <StackLayout
+        VerticalOptions="Center">
+        <ActivityIndicator
+            Color="White"
+            x:Name="indicator"
+            Scale="2"/>
+        <Label
+            Text="Loading"
+            HorizontalOptions="Center"
+            FontSize="Large"
+            Padding="0, 20"/>
+    </StackLayout>
+</Frame>

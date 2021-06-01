@@ -11,6 +11,7 @@ namespace MovieDatabase.ViewModels
     public class BaseViewModel : INotifyPropertyChanged
     {
         public IFirebase FirebaseAuth => DependencyService.Get<IFirebase>();
+        public IMovieDB MovieDB => DependencyService.Get<IMovieDB>();
 
         bool isBusy = false;
         public bool IsBusy
