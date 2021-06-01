@@ -11,4 +11,20 @@
             ContentTemplate="{DataTemplate local:LoginPage}"/>
     </ShellItem>
 
+    <TabBar 
+        Route="main">
+        <Tab
+            Title="Discover"
+            Icon="ic_action_home.png">
+            <ShellContent 
+                ContentTemplate="{DataTemplate local:MainPage}" />
+        </Tab>
+        <Tab
+            Title="Browse"
+            Icon="ic_action_featured_play_list.png">
+            <ShellContent 
+                ContentTemplate="{DataTemplate local:BrowsePage}" />
+        </Tab>
+    </TabBar>
+
 </Shell>

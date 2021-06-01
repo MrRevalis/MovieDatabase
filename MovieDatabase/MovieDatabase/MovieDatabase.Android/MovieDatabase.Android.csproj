@@ -55,10 +55,10 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Xamarin.Firebase.Auth">
-      <Version>120.0.4</Version>
+      <Version>120.0.2</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Firebase.Core">
-      <Version>118.0.3</Version>
+      <Version>118.0.2</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Essentials" Version="1.6.1" />
     <PackageReference Include="Xamarin.Forms">
@@ -144,6 +144,12 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\ic_action_lock_light.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\ic_action_featured_play_list.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\ic_action_home.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>

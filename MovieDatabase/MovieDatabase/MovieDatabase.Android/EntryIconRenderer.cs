@@ -84,10 +84,6 @@ namespace MovieDatabase.Droid
                             editText.SetCompoundDrawablesWithIntrinsicBounds(null, null, GetDrawable(entryIcon.Image), null); break;
                     }
                 }
-            }
-
-            if(e.PropertyName == "TextColor")
-            {
                 OSAppTheme currentTheme = Xamarin.Forms.Application.Current.RequestedTheme;
 
                 if (currentTheme == OSAppTheme.Light)

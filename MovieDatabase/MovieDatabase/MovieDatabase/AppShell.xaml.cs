@@ -8,9 +8,9 @@ namespace MovieDatabase
         public AppShell()
         {
             InitializeComponent();
-
+            Routing.RegisterRoute("main", typeof(MainPage));
+            Routing.RegisterRoute("registration", typeof(RegistrationPage));
             Routing.RegisterRoute("internet", typeof(NoInternetPage));
         }
-
     }
 }

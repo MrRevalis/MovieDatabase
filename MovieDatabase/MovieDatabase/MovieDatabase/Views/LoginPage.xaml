@@ -49,7 +49,7 @@
                         Source="{AppThemeBinding Dark=movieBaseDark.png, Light=movieBaseLight.png}"
                         HorizontalOptions="Center"/>
                     <Label
-                        Text="Organiser"
+                        Text="Movie Database"
                         FontSize="Large"
                         FontAttributes="Bold"
                         HorizontalOptions="Center"/>
@@ -139,5 +139,4 @@
             </StackLayout>
         </Grid>
     </ContentPage.Content>
-    
 </ContentPage>

@@ -45,7 +45,8 @@ namespace MovieDatabase.iOS
 
         public async Task<string> Login(string email, string password)
         {
-            try
+            //APPLE DEVELOPER ACCOUNT
+            /*try
             {
                 var user = await Auth.DefaultInstance.SignInWithPasswordAsync(email, password);
                 return await user.User.GetIdTokenAsync();
@@ -53,7 +54,8 @@ namespace MovieDatabase.iOS
             catch(Exception e)
             {
                 return String.Empty;
-            }
+            }*/
+            return "working";
         }
 
         public bool SignOut()

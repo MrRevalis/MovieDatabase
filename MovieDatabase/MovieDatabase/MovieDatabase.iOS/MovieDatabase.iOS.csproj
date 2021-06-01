@@ -90,7 +90,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Xamarin.Firebase.iOS.Auth">
-      <Version>6.9.2</Version>
+      <Version>6.5.1</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Essentials" Version="1.6.1" />
     <PackageReference Include="Xamarin.Forms">
@@ -234,5 +234,11 @@
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\ic_action_lock_light.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\ic_action_featured_play_list.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\ic_action_home.png" />
   </ItemGroup>
 </Project>

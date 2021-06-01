@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:MovieDatabase.ViewModels"
+             xmlns:bh="clr-namespace:MovieDatabase.Behaviors"
+             xmlns:cu="clr-namespace:MovieDatabase.CustomControls"
+             xmlns:cv="clr-namespace:MovieDatabase.Converters"
+             x:Class="MovieDatabase.Views.RegistrationPage"
+             Shell.PresentationMode="ModalAnimated">
+
+    <ContentPage.BindingContext>
+        <vm:RegistrationViewModel/>
+    </ContentPage.BindingContext>
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <cv:FirstValidationErrorConverter x:Key="FirstValidationErrorConverter"/>
+            <cv:InverseBoolConverter x:Key="InverseBoolConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+        <Grid
+            VerticalOptions="CenterAndExpand"
+            Margin="20"
+            RowSpacing="5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Label
+                Grid.Row="0"
+                Text="Registration"
+                FontSize="Large"
+                FontAttributes="Bold"
+                HorizontalOptions="Center"
+                Padding="50"
+                VerticalOptions="StartAndExpand"/>
+            <cu:InternetLabel Grid.Row="1" Margin="10"/>
+            <!--EMAIL-->
+            <cu:EntryIcon
+                Text="{Binding Email.Value}"
+                Placeholder="Email"
+                Image="{AppThemeBinding Dark=ic_action_email_dark, Light=ic_action_email_light}"
+                Grid.Row="2">
+                <cu:EntryIcon.Behaviors>
+                    <bh:EntryLineValidationBehaviour IsValid="{Binding Email.IsValid}"/>
+                </cu:EntryIcon.Behaviors>
+            </cu:EntryIcon>
+            <Label
+                Grid.Row="3"
+                Text="{Binding Email.Errors, Converter={StaticResource FirstValidationErrorConverter}}"
+                IsVisible="{Binding Email.IsValid, Converter={StaticResource InverseBoolConverter}}"
+                Style="{StaticResource ErrorTextStyle}"/>
+            <!---->
+
+            <!--PASSWORD-->
+            <cu:EntryIcon
+                Text="{Binding Password.Item1.Value}"
+                Placeholder="Password"
+                IsPassword="True"
+                Image="{AppThemeBinding Dark=ic_action_lock_dark, Light=ic_action_lock_light}"
+                Grid.Row="4">
+                <cu:EntryIcon.Behaviors>
+                    <bh:EntryLineValidationBehaviour IsValid="{Binding Password.Item1.IsValid}"/>
+                </cu:EntryIcon.Behaviors>
+            </cu:EntryIcon>
+            <Label
+                Grid.Row="5"
+                Text="{Binding Password.Item1.Errors, Converter={StaticResource FirstValidationErrorConverter}}"
+                IsVisible="{Binding Password.Item1.IsValid, Converter={StaticResource InverseBoolConverter}}"
+                Style="{StaticResource ErrorTextStyle}"/>
+            <!---->
+
+            <!--CONFIRM PASSWORD-->
+            <cu:EntryIcon
+                Text="{Binding Password.Item2.Value}"
+                Placeholder="Confirm password"
+                Image="{AppThemeBinding Dark=ic_action_lock_dark, Light=ic_action_lock_light}"
+                IsPassword="True"
+                Grid.Row="6">
+                <cu:EntryIcon.Behaviors>
+                    <bh:EntryLineValidationBehaviour IsValid="{Binding Password.Item2.IsValid}"/>
+                </cu:EntryIcon.Behaviors>
+            </cu:EntryIcon>
+            <Label
+                Grid.Row="7"
+                Text="{Binding Password.Item2.Errors, Converter={StaticResource FirstValidationErrorConverter}}"
+                IsVisible="{Binding Password.Item2.IsValid, Converter={StaticResource InverseBoolConverter}}"
+                Style="{StaticResource ErrorTextStyle}"/>
+            <!---->
+
+            <Button
+                Grid.Row="8"
+                Text="Register"
+                HorizontalOptions="Center"
+                BorderRadius="15"
+                Command="{Binding Register}"/>
+            <Label
+                Grid.Row="9"
+                Text="Cancel"
+                TextDecorations="Underline"
+                VerticalOptions="FillAndExpand"
+                VerticalTextAlignment="Center"
+                HorizontalTextAlignment="Center">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer
+                        Command="{Binding Return}"/>
+                </Label.GestureRecognizers>
+            </Label>
+        </Grid>
+    </ContentPage.Content>
+    
+</ContentPage>

@@ -1,17 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:controls="clr-namespace:MovieDatabase.CustomControls"
-             x:Class="MovieDatabase.Views.TestPage"
-             Title="Test Page">
+             xmlns:vm="clr-namespace:MovieDatabase.ViewModels"
+             x:Class="MovieDatabase.Views.BrowsePage">
+
+    <ContentPage.BindingContext>
+        <vm:BrowseViewModel/>
+    </ContentPage.BindingContext>
+
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="TestPage"
+            <Label Text="Browse"
                 VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand" />
-            <controls:EntryIcon
-                Placeholder="TEST"
-                Image="ic_action_email"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

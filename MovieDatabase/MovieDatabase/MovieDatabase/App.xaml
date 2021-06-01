@@ -55,6 +55,11 @@
                 <Setter Property="PlaceholderColor" Value="{AppThemeBinding Dark=#ffffff, Light=#000000}"/>
             </Style>
 
+            <Style TargetType="Label" x:Key="ErrorTextStyle">
+                <Setter Property="TextColor" Value="{StaticResource red}"/>
+                <Setter Property="FontSize" Value="12"/>
+            </Style>
+
         </ResourceDictionary>
     </Application.Resources>
     
