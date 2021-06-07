@@ -12,4 +12,6 @@
 
     <Color x:Key="green">#237A57</Color>
     <Color x:Key="red">#8e3940</Color>
+    <Color x:Key="lightGray">#d3d3d3</Color>
+    
 </ResourceDictionary>

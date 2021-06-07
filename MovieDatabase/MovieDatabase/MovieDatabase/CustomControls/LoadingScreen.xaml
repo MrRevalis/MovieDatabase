@@ -6,11 +6,11 @@
     x:Name="frame"
     HorizontalOptions="FillAndExpand"
     VerticalOptions="FillAndExpand"
-    BackgroundColor="{StaticResource backgroundDark}">
+    BackgroundColor="{AppThemeBinding Dark={StaticResource backgroundDark},Light={StaticResource backgroundLight}}">
     <StackLayout
         VerticalOptions="Center">
         <ActivityIndicator
-            Color="White"
+            Color="{AppThemeBinding Dark={StaticResource textDark},Light={StaticResource textLight}}"
             x:Name="indicator"
             Scale="2"/>
         <Label

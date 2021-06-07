@@ -24,7 +24,15 @@
             EventName="Appearing"
             Command="{Binding AppearingCommand}"/>
     </ContentPage.Behaviors>
-
+    
+    <ContentPage.Padding>
+        <OnPlatform
+            x:TypeArguments="Thickness">
+            <OnPlatform.iOS>0, 20, 0, 0</OnPlatform.iOS>
+            <OnPlatform.Android>0, 0, 0, 0</OnPlatform.Android>
+        </OnPlatform>
+    </ContentPage.Padding>
+    
     <Shell.TitleView>
         <Grid>
             <Grid.ColumnDefinitions>
@@ -33,7 +41,7 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <ImageButton Grid.Column="0" Source="ic_action_search.png" Scale="0.8" HorizontalOptions="Start" BackgroundColor="Transparent" Command="{Binding SearchPageCommand}"/>
-            <Label Grid.Column="1" Text="Discover" HorizontalOptions="Center" VerticalOptions="Center" FontSize="Medium" FontAttributes="Bold"/>
+            <Label Grid.Column="1" Text="Discover" HorizontalOptions="Center" VerticalOptions="Center" FontSize="Medium" FontAttributes="Bold" TextColor="White"/>
             <ImageButton Grid.Column="2" Source="ic_action_logout.png" Scale="0.8" HorizontalOptions="End" BackgroundColor="Transparent" Command="{Binding SignOutCommand}"/>
         </Grid>
     </Shell.TitleView>
@@ -45,7 +53,7 @@
                 <RowDefinition Height="45"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <CarouselView Grid.Row="0" ItemsSource="{Binding TrendingList}" IndicatorView="indicatorView" VerticalOptions="FillAndExpand" HeightRequest="200">
+            <CarouselView Grid.Row="0" ItemsSource="{Binding TrendingList}" IndicatorView="indicatorView" VerticalOptions="FillAndExpand" HeightRequest="200" BackgroundColor="{StaticResource backgroundDark}">
                 <CarouselView.ItemTemplate>
                     <DataTemplate>
                         <Grid>
@@ -53,7 +61,7 @@
                                 <RowDefinition/>
                             </Grid.RowDefinitions>
                             <Image Source="{Binding Background}" Grid.Row="0" Aspect="Fill"/>
-                            <Label Text="{Binding Title}" Grid.Row="0" VerticalOptions="End" HorizontalOptions="Start" Padding="20" FontSize="Large"/>
+                            <Label Text="{Binding Title}" Grid.Row="0" VerticalOptions="End" HorizontalOptions="Start" Padding="20" FontSize="Large" TextColor="White"/>
 
                             <Grid.GestureRecognizers>
                                 <TapGestureRecognizer 
@@ -68,7 +76,6 @@
 
             <CarouselView
                 Grid.Row="1"
-                PeekAreaInsets="150"
                 ItemsSource="{Binding Types}"
                 CurrentItem="{Binding CurrentItemType}"
                 CurrentItemChangedCommand="{Binding ChangeTypeCommand}"
@@ -92,7 +99,15 @@
                         </Grid>
                     </DataTemplate>
                 </CarouselView.ItemTemplate>
-
+                <CarouselView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Horizontal" ItemSpacing="0" SnapPointsType="MandatorySingle"  />
+                </CarouselView.ItemsLayout>
+                <CarouselView.PeekAreaInsets>
+                    <OnPlatform x:TypeArguments="Thickness">
+                        <On Platform="iOS" Value="0,0,250,0"/>
+                        <On Platform="Android" Value="0,0,250,0" />
+                    </OnPlatform>
+                </CarouselView.PeekAreaInsets>
             </CarouselView>
 
             <SwipeView Grid.Row="2">
@@ -117,20 +132,20 @@
                     </SwipeItems>
                 </SwipeView.RightItems>
 
-                <CollectionView ItemsSource="{Binding ActualMovies}">
+                <CollectionView ItemsSource="{Binding ActualMovies}" ItemSizingStrategy="MeasureAllItems">
                     <CollectionView.ItemsLayout>
-                        <GridItemsLayout Orientation="Vertical" Span="2"/>
+                        <GridItemsLayout Orientation="Vertical" Span="3"/>
                     </CollectionView.ItemsLayout>
 
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
-                            <Grid Padding="10">
+                            <Grid Padding="5">
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="260"/>
+                                    <RowDefinition Height="200"/>
                                     <RowDefinition Height="*"/>
                                 </Grid.RowDefinitions>
                                 <Image Source="{Binding Background}" Grid.Row="0" Aspect="Fill"/>
-                                <Label Text="{Binding Title}" FontSize="Body" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Grid.Row="1"/>
+                                <Label Text="{Binding Title}" FontSize="Body" HorizontalTextAlignment="Center" VerticalTextAlignment="Start" FontAttributes="Bold" Grid.Row="1"/>
 
                                 <Grid.GestureRecognizers>
                                     <TapGestureRecognizer 

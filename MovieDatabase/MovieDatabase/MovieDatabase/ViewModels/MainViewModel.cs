@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.CommunityToolkit.ObjectModel;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace MovieDatabase.ViewModels
@@ -113,22 +114,19 @@ namespace MovieDatabase.ViewModels
 
         private async void GoToSearchPage()
         {
-            await Shell.Current.GoToAsync($"//main/search?type={typeItem}&id={lastItemID}");
+            await Shell.Current.GoToAsync($"//main/search");
         }
         private async Task ChangePage(SearchItem item)
         {
             if (item == null)
                 return;
 
-            if (item.Type.Equals("books"))
-                await Shell.Current.GoToAsync($"detailbook?id={item.ID}");
-            else
-            {
-                lastItemID = item.ID;
-                typeItem = item.Type;
-                await Shell.Current.GoToAsync($"detail?type={item.Type}&id={item.ID}");
-            }
+            Preferences.Set("LastItem", item.ID);
+            Preferences.Set("LastType", item.Type);
 
+            lastItemID = item.ID;
+            typeItem = item.Type;
+            await Shell.Current.GoToAsync($"detail?type={item.Type}&id={item.ID}");
         }
 
         private async Task OnAppearing()

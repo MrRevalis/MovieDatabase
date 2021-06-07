@@ -9,6 +9,7 @@ namespace MovieDatabase
         {
             InitializeComponent();
             Routing.RegisterRoute("main", typeof(MainPage));
+            Routing.RegisterRoute("search", typeof(SearchPage));
             Routing.RegisterRoute("registration", typeof(RegistrationPage));
             Routing.RegisterRoute("internet", typeof(NoInternetPage));
         }

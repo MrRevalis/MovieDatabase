@@ -1,13 +1,16 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using MovieDatabase.ViewModels;
 using System;
 
 namespace MovieDatabase.Test
 {
     [TestClass]
-    public class UnitTest1
+    public class LoginTest
     {
+
+        LoginViewModel loginViewModel;
         [TestMethod]
-        public void TestMethod1()
+        public void CheckCredentials()
         {
 
         }

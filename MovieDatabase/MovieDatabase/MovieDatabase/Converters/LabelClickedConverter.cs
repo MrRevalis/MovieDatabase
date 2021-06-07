@@ -20,7 +20,7 @@ namespace MovieDatabase.Converters
                 return Color.FromHex("237A57");
             }
             else
-                return Color.FromHex("215461");
+                return Color.FromHex("d3d3d3");
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
