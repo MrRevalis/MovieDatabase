@@ -278,4 +278,10 @@
   <ItemGroup>
     <BundleResource Include="Resources\ic_action_favorite_border.png" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\appIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\backgroundGradient.png" />
+  </ItemGroup>
 </Project>
