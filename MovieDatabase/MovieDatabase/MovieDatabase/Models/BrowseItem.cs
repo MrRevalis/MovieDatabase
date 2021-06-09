@@ -8,8 +8,8 @@ namespace MovieDatabase.Models
     {
         public string ID { get; set; }
         public string Type { get; set; }
-        public bool ToRealise { get; set; }
-        public bool Realised { get; set; }
+        public bool ToWatch { get; set; }
+        public bool Watched { get; set; }
         public string Image { get; set; }
         public string Title { get; set; }
     }

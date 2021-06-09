@@ -11,6 +11,7 @@ namespace MovieDatabase
             InitializeComponent();
 
             DependencyService.Register<IMovieDB, MovieDB>();
+            DependencyService.Register<IFirebaseDatabase, FirebaseDatabase>();
 
             MainPage = new AppShell();
         }

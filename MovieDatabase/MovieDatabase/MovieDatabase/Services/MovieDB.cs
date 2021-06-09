@@ -41,8 +41,8 @@ namespace MovieDatabase.Services
                         Image = imageSource + movieResponse.backdrop_path,
                         Title = movieResponse.title,
                         Type = "movies",
-                        Realised = item.Realised,
-                        ToRealise = item.ToRealise
+                        Watched = item.Watched,
+                        ToWatch = item.ToWatch
                     };
                 }
             }
@@ -65,8 +65,8 @@ namespace MovieDatabase.Services
                         Image = imageSource + movieResponse.backdrop_path,
                         Title = movieResponse.original_title ?? movieResponse.name,
                         Type = "tv series",
-                        Realised = item.Realised,
-                        ToRealise = item.ToRealise
+                        Watched = item.Watched,
+                        ToWatch = item.ToWatch
                     };
                 }
             }

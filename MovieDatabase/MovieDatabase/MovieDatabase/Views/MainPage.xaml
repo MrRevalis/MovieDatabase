@@ -40,9 +40,9 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <ImageButton Grid.Column="0" Source="ic_action_search.png" Scale="0.8" HorizontalOptions="Start" BackgroundColor="Transparent" Command="{Binding SearchPageCommand}"/>
+            <ImageButton Grid.Column="0" Source="ic_action_search.png" Scale="0.85" HorizontalOptions="Start" BackgroundColor="Transparent" Command="{Binding SearchPageCommand}"/>
             <Label Grid.Column="1" Text="Discover" HorizontalOptions="Center" VerticalOptions="Center" FontSize="Medium" FontAttributes="Bold" TextColor="White"/>
-            <ImageButton Grid.Column="2" Source="ic_action_logout.png" Scale="0.8" HorizontalOptions="End" BackgroundColor="Transparent" Command="{Binding SignOutCommand}"/>
+            <ImageButton Grid.Column="2" Source="ic_action_logout.png" Scale="0.85" HorizontalOptions="End" BackgroundColor="Transparent" Command="{Binding SignOutCommand}"/>
         </Grid>
     </Shell.TitleView>
 

@@ -6,20 +6,28 @@ using Android.Runtime;
 using Android.OS;
 
 using Firebase;
+using Xamarin.Forms.Platform.Android;
 
 namespace MovieDatabase.Droid
 {
-    [Activity(Label = "MovieDatabase", Icon = "@mipmap/launcher_icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode | ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize )]
+    [Activity(Label = "MovieDatabase", Icon = "@mipmap/launcher_icon", Theme = "@style/MainTheme", MainLauncher = false, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode | ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize )]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
 
+            this.SetStatusBarColor(Xamarin.Forms.Color.FromHex("1b242c").ToAndroid());
+
+            var options = new FirebaseOptions.Builder()
+                .SetApplicationId("moviedatabase-5e229")
+                .SetApiKey("AIzaSyAPTgYJUDh13vmKNwrAhW73-tF9OGPtMhk")
+                .SetStorageBucket("moviedatabase-5e229.appspot.com")
+                .Build();
 
             if (FirebaseApp.GetApps(Application.Context).Count == 0)
             {
-                FirebaseApp.InitializeApp(Application.Context);
+                FirebaseApp.InitializeApp(Application.Context, options);
             }
 
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);

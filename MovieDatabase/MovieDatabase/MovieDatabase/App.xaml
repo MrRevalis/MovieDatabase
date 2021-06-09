@@ -60,6 +60,7 @@
                 <Setter Property="PlaceholderColor" Value="{AppThemeBinding Dark=#ffffff, Light=#000000}"/>
                 <Setter Property="ActualColor" Value="{AppThemeBinding Dark=#ffffff, Light=#000000}"/>
                 <Setter Property="TextColor" Value="{AppThemeBinding Dark=#ffffff, Light=#000000}"/>
+                <Setter Property="BackgroundColor" Value="{AppThemeBinding Dark={StaticResource backgroundDark}, Light={StaticResource backgroundLight}}"/>
             </Style>
 
 

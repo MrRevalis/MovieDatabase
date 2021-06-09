@@ -108,8 +108,9 @@ namespace MovieDatabase.ViewModels
                 if (concat.Any())
                 {
                     SearchedItem = title;
-                    SearchList.RemoveAll();
+                    SearchList.Clear();
                     ItemsCollection = concat;
+                    currentIndex = 0;
                     AddToObservable();
                 }
             }
