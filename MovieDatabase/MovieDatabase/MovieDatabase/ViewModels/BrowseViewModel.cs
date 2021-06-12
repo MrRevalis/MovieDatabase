@@ -36,6 +36,13 @@ namespace MovieDatabase.ViewModels
             set => SetProperty(ref realisedItems, value);
         }
 
+        private int itemSpan = 1;
+        public int ItemSpan
+        {
+            get => itemSpan;
+            set => SetProperty(ref itemSpan, value);
+        }
+
 
         public BrowseViewModel()
         {
@@ -52,6 +59,22 @@ namespace MovieDatabase.ViewModels
             RealisedItems = new ObservableRangeCollection<BrowseItem>();
 
             username = FirebaseAuth.GetUserName();
+
+            this.PropertyChanged += BrowsePropertyChanged;
+        }
+
+        private void BrowsePropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if(e.PropertyName == "Orientation")
+            {
+                switch (Orientation)
+                {
+                    case StackOrientation.Horizontal: ItemSpan = 2; break;
+                    case StackOrientation.Vertical: ItemSpan = 1; break;
+                    default:
+                        ItemSpan = 1;break;
+                }
+            }
         }
 
         private async Task AddToFavouriteItem(BrowseItem item)

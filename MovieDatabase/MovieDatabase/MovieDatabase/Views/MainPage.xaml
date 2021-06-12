@@ -47,106 +47,38 @@
     </Shell.TitleView>
 
     <ContentPage.Content>
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="45"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-            <CarouselView Grid.Row="0" ItemsSource="{Binding TrendingList}" IndicatorView="indicatorView" VerticalOptions="FillAndExpand" HeightRequest="200" BackgroundColor="{StaticResource backgroundDark}">
-                <CarouselView.ItemTemplate>
-                    <DataTemplate>
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition/>
-                            </Grid.RowDefinitions>
-                            <Image Source="{Binding Background}" Grid.Row="0" Aspect="Fill"/>
-                            <Label Text="{Binding Title}" Grid.Row="0" VerticalOptions="End" HorizontalOptions="Start" Padding="20" FontSize="Large" TextColor="White"/>
-
-                            <Grid.GestureRecognizers>
-                                <TapGestureRecognizer 
-                                        Command="{Binding ChangePageCommand, Source={RelativeSource AncestorType={x:Type vm:MainViewModel}}}"
-                                        CommandParameter="{Binding .}"/>
-                            </Grid.GestureRecognizers>
-                        </Grid>
-                    </DataTemplate>
-                </CarouselView.ItemTemplate>
-            </CarouselView>
-            <IndicatorView Grid.Row="0" x:Name="indicatorView" IndicatorsShape="Circle" IndicatorColor="White" SelectedIndicatorColor="{StaticResource green}" VerticalOptions="End" Margin="10"/>
-
-            <CarouselView
-                Grid.Row="1"
-                ItemsSource="{Binding Types}"
-                CurrentItem="{Binding CurrentItemType}"
-                CurrentItemChangedCommand="{Binding ChangeTypeCommand}"
-                CurrentItemChangedCommandParameter="{Binding Source={RelativeSource Self}, Path=CurrentItem}">
-                <CarouselView.ItemTemplate>
-                    <DataTemplate>
-                        <Grid Padding="5">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                            </Grid.RowDefinitions>
-                            <Label Text="{Binding .}" VerticalOptions="Center" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Center" x:Name="typeLabel" FontSize="Medium" Grid.Row="0">
-                                <Label.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding Source={x:Reference mainPage}, Path=BindingContext.ChangeTypeCommand}" CommandParameter="{Binding .}"/>
-                                </Label.GestureRecognizers>
-                            </Label>
-                            <BoxView
-                                Grid.Row="1"
-                                BackgroundColor="{Binding Source={x:Reference mainPage}, Path=BindingContext.CurrentItemType, Converter={StaticResource LabelClickedConverter}, ConverterParameter={x:Reference Name=typeLabel}}"
-                                HeightRequest="5"/>
-                        </Grid>
-                    </DataTemplate>
-                </CarouselView.ItemTemplate>
-                <CarouselView.ItemsLayout>
-                    <LinearItemsLayout Orientation="Horizontal" ItemSpacing="0" SnapPointsType="MandatorySingle"  />
-                </CarouselView.ItemsLayout>
-                <CarouselView.PeekAreaInsets>
-                    <OnPlatform x:TypeArguments="Thickness">
-                        <On Platform="iOS" Value="0,0,250,0"/>
-                        <On Platform="Android" Value="0,0,250,0" />
-                    </OnPlatform>
-                </CarouselView.PeekAreaInsets>
-            </CarouselView>
-
-            <SwipeView Grid.Row="2">
-
-                <SwipeView.LeftItems>
-                    <SwipeItems Mode="Execute" SwipeBehaviorOnInvoked="Auto">
-                        <SwipeItem Command="{Binding SwipeCommand}">
-                            <SwipeItem.CommandParameter>
-                                <x:Int32>-1</x:Int32>
-                            </SwipeItem.CommandParameter>
-                        </SwipeItem>
-                    </SwipeItems>
-                </SwipeView.LeftItems>
-
-                <SwipeView.RightItems>
-                    <SwipeItems Mode="Execute" SwipeBehaviorOnInvoked="Auto">
-                        <SwipeItem Command="{Binding SwipeCommand}">
-                            <SwipeItem.CommandParameter>
-                                <x:Int32>1</x:Int32>
-                            </SwipeItem.CommandParameter>
-                        </SwipeItem>
-                    </SwipeItems>
-                </SwipeView.RightItems>
-
-                <CollectionView ItemsSource="{Binding ActualMovies}" ItemSizingStrategy="MeasureAllItems">
-                    <CollectionView.ItemsLayout>
-                        <GridItemsLayout Orientation="Vertical" Span="3"/>
-                    </CollectionView.ItemsLayout>
-
-                    <CollectionView.ItemTemplate>
+        <StackLayout Orientation="{Binding Orientation}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <CarouselView Grid.Row="0" ItemsSource="{Binding TrendingList}" IndicatorView="indicatorView" VerticalOptions="FillAndExpand" HeightRequest="200" BackgroundColor="{StaticResource backgroundDark}">
+                    <CarouselView.ItemTemplate>
                         <DataTemplate>
-                            <Grid Padding="5">
+                            <Grid>
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="200"/>
-                                    <RowDefinition Height="*"/>
+                                    <RowDefinition/>
                                 </Grid.RowDefinitions>
-                                <Image Source="{Binding Background}" Grid.Row="0" Aspect="Fill"/>
-                                <Label Text="{Binding Title}" FontSize="Body" HorizontalTextAlignment="Center" VerticalTextAlignment="Start" FontAttributes="Bold" Grid.Row="1"/>
-
+                                <Image Source="{Binding Background}" Grid.Row="0" Aspect="Fill">
+                                    <Image.Triggers>
+                                        <DataTrigger
+                                            TargetType="Image"
+                                            Binding="{Binding Orientation, Source={RelativeSource AncestorType={x:Type vm:MainViewModel}}}"
+                                            Value="Horizontal">
+                                            <Setter Property="Source" Value="{Binding Poster}"/>
+                                        </DataTrigger>
+                                    </Image.Triggers>
+                                </Image>
+                                <Label Text="{Binding Title}" Grid.Row="0" VerticalOptions="End" HorizontalOptions="Start" Padding="20" FontSize="Large" TextColor="White">
+                                    <Label.Triggers>
+                                        <DataTrigger
+                                            TargetType="Label"
+                                            Binding="{Binding Orientation, Source={RelativeSource AncestorType={x:Type vm:MainViewModel}}}"
+                                            Value="Horizontal">
+                                            <Setter Property="TextColor" Value="Transparent"/>
+                                        </DataTrigger>
+                                    </Label.Triggers>
+                                </Label>
                                 <Grid.GestureRecognizers>
                                     <TapGestureRecognizer 
                                         Command="{Binding ChangePageCommand, Source={RelativeSource AncestorType={x:Type vm:MainViewModel}}}"
@@ -154,15 +86,125 @@
                                 </Grid.GestureRecognizers>
                             </Grid>
                         </DataTemplate>
-                    </CollectionView.ItemTemplate>
-
-                </CollectionView>
-            </SwipeView>
-
-            <cu:LoadingScreen
-                ShouldWork="{Binding IsBusy}"
-                Grid.Row="2"/>
+                    </CarouselView.ItemTemplate>
+                    <CarouselView.Triggers>
+                        <DataTrigger
+                            TargetType="CarouselView"
+                            Binding="{Binding Orientation}"
+                            Value="Horizontal">
+                            <Setter Property="HeightRequest" Value="-1"/>
+                            <Setter Property="VerticalOptions" Value="Fill"/>
+                            <Setter Property="WidthRequest" Value="250"/>
+                        </DataTrigger>
+                    </CarouselView.Triggers>
+                </CarouselView>
+                <IndicatorView Grid.Row="0" x:Name="indicatorView" IndicatorsShape="Circle" IndicatorColor="White" SelectedIndicatorColor="{StaticResource green}" VerticalOptions="End" Margin="10">
+                    <IndicatorView.Triggers>
+                        <DataTrigger
+                            TargetType="IndicatorView"
+                            Binding="{Binding Orientation}"
+                            Value="Horizontal">
+                            <Setter Property="VerticalOptions" Value="Start"/>
+                        </DataTrigger>
+                    </IndicatorView.Triggers>
+                </IndicatorView>
+            </Grid>
             
-        </Grid>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="45"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <CarouselView
+                    Grid.Row="0"
+                    AutomationId="welcomeBox"
+                    ItemsSource="{Binding Types}"
+                    CurrentItem="{Binding CurrentItemType}"
+                    CurrentItemChangedCommand="{Binding ChangeTypeCommand}"
+                    CurrentItemChangedCommandParameter="{Binding Source={RelativeSource Self}, Path=CurrentItem}">
+                    <CarouselView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Padding="5">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <Label Text="{Binding .}" VerticalOptions="Center" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Center" x:Name="typeLabel" FontSize="Medium" Grid.Row="0">
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding Source={x:Reference mainPage}, Path=BindingContext.ChangeTypeCommand}" CommandParameter="{Binding .}"/>
+                                    </Label.GestureRecognizers>
+                                </Label>
+                                <BoxView
+                                    Grid.Row="1"
+                                    BackgroundColor="{Binding Source={x:Reference mainPage}, Path=BindingContext.CurrentItemType, Converter={StaticResource LabelClickedConverter}, ConverterParameter={x:Reference Name=typeLabel}}"
+                                    HeightRequest="5"/>
+                            </Grid>
+                        </DataTemplate>
+                    </CarouselView.ItemTemplate>
+                    <CarouselView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Horizontal" ItemSpacing="0" SnapPointsType="MandatorySingle"  />
+                    </CarouselView.ItemsLayout>
+                    <CarouselView.PeekAreaInsets>
+                        <OnPlatform x:TypeArguments="Thickness">
+                            <On Platform="iOS" Value="0,0,250,0"/>
+                            <On Platform="Android" Value="0,0,250,0" />
+                        </OnPlatform>
+                    </CarouselView.PeekAreaInsets>
+                </CarouselView>
+
+                <SwipeView
+                    Grid.Row="1">
+
+                    <SwipeView.LeftItems>
+                        <SwipeItems Mode="Execute" SwipeBehaviorOnInvoked="Auto">
+                            <SwipeItem Command="{Binding SwipeCommand}">
+                                <SwipeItem.CommandParameter>
+                                    <x:Int32>-1</x:Int32>
+                                </SwipeItem.CommandParameter>
+                            </SwipeItem>
+                        </SwipeItems>
+                    </SwipeView.LeftItems>
+
+                    <SwipeView.RightItems>
+                        <SwipeItems Mode="Execute" SwipeBehaviorOnInvoked="Auto">
+                            <SwipeItem Command="{Binding SwipeCommand}">
+                                <SwipeItem.CommandParameter>
+                                    <x:Int32>1</x:Int32>
+                                </SwipeItem.CommandParameter>
+                            </SwipeItem>
+                        </SwipeItems>
+                    </SwipeView.RightItems>
+
+                    <CollectionView ItemsSource="{Binding ActualMovies}" ItemSizingStrategy="MeasureAllItems">
+                        <CollectionView.ItemsLayout>
+                            <GridItemsLayout Orientation="Vertical" Span="3"/>
+                        </CollectionView.ItemsLayout>
+
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Padding="5">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="200"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <Image Source="{Binding Background}" Grid.Row="0" Aspect="Fill"/>
+                                    <Label Text="{Binding Title}" FontSize="Body" HorizontalTextAlignment="Center" VerticalTextAlignment="Start" FontAttributes="Bold" Grid.Row="1"/>
+
+                                    <Grid.GestureRecognizers>
+                                        <TapGestureRecognizer 
+                                        Command="{Binding ChangePageCommand, Source={RelativeSource AncestorType={x:Type vm:MainViewModel}}}"
+                                        CommandParameter="{Binding .}"/>
+                                    </Grid.GestureRecognizers>
+                                </Grid>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                        
+                    </CollectionView>
+                </SwipeView>
+                <cu:LoadingScreen
+                    Grid.Row="1"
+                    ShouldWork="{Binding IsBusy}"/>
+            </Grid>
+        </StackLayout>
     </ContentPage.Content>
 </ContentPage>

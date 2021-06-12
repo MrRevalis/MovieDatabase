@@ -46,7 +46,7 @@ namespace MovieDatabase.ViewModels
             }
         }
 
-        private bool ValidateFields()
+        public bool ValidateFields()
         {
             bool emailValid = Email.Validate();
             bool passwordValid = Password.Validate();

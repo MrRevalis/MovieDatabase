@@ -28,7 +28,7 @@
     <ContentPage.Content>
         <Grid>
             <ScrollView>
-                <StackLayout>
+                <StackLayout Orientation="{Binding Orientation}">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition
@@ -169,52 +169,51 @@
                                 </DataTemplate>
                             </CollectionView.ItemTemplate>
                         </CollectionView>
-                    </StackLayout>
-                    <Label
-                        Margin="10, -30, 0, 0"
-                        Text="Trailers"
-                        FontSize="Large"/>
-                    <CollectionView
-                        ItemSizingStrategy="MeasureAllItems"
-                        ItemsLayout="HorizontalList"
-                        ItemsSource="{Binding VideoList}"
-                        HeightRequest="220">
+                        <Label
+                            Margin="10, -20, 0, 0"
+                            Text="Trailers"
+                            FontSize="Large"/>
+                        <CollectionView
+                            ItemSizingStrategy="MeasureAllItems"
+                            ItemsLayout="HorizontalList"
+                            ItemsSource="{Binding VideoList}"
+                            HeightRequest="220">
 
-                        <CollectionView.EmptyView>
-                            <ContentView>
-                                <Label
-                                    Text="No trailers"
-                                    FontSize="Large"
-                                    HorizontalOptions="Center"
-                                    VerticalOptions="Center"/>
-                            </ContentView>
-                        </CollectionView.EmptyView>
-
-                        <CollectionView.ItemTemplate>
-                            <DataTemplate>
-                                <Grid Margin="5">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto"/>
-                                    </Grid.RowDefinitions>
-                                    <Image
-                                        Grid.Row="0"
-                                        Source="{Binding Thumbail, Converter={StaticResource ImageSourceConverter}, ConverterParameter='backgroundEmpty.jpg'}"/>
-                                    <Button
-                                        Grid.Row="0"
+                            <CollectionView.EmptyView>
+                                <ContentView>
+                                    <Label
+                                        Text="No trailers"
+                                        FontSize="Large"
                                         HorizontalOptions="Center"
-                                        VerticalOptions="Center"
-                                        HeightRequest="60"
-                                        WidthRequest="60"
-                                        BorderRadius="30"
-                                        BackgroundColor="#66000000"
-                                        ImageSource="ic_action_play_arrow.png"
-                                        Command="{Binding PlayVideoCommand, Source={RelativeSource AncestorType={x:Type vm:DetailViewModel}}}"
-                                        CommandParameter="{Binding YouTube}"/>
-                                </Grid>
-                            </DataTemplate>
-                        </CollectionView.ItemTemplate>
-                    </CollectionView>
+                                        VerticalOptions="Center"/>
+                                </ContentView>
+                            </CollectionView.EmptyView>
 
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Margin="5">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+                                        <Image
+                                            Grid.Row="0"
+                                            Source="{Binding Thumbail, Converter={StaticResource ImageSourceConverter}, ConverterParameter='backgroundEmpty.jpg'}"/>
+                                        <Button
+                                            Grid.Row="0"
+                                            HorizontalOptions="Center"
+                                            VerticalOptions="Center"
+                                            HeightRequest="60"
+                                            WidthRequest="60"
+                                            BorderRadius="30"
+                                            BackgroundColor="#66000000"
+                                            ImageSource="ic_action_play_arrow.png"
+                                            Command="{Binding PlayVideoCommand, Source={RelativeSource AncestorType={x:Type vm:DetailViewModel}}}"
+                                            CommandParameter="{Binding YouTube}"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </StackLayout>
                 </StackLayout>
             </ScrollView>
 

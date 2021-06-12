@@ -18,6 +18,7 @@ namespace MovieDatabase.Services
         Task<List<CastDetail>> MovieCast(string ID);
         Task<List<CastDetail>> TvCast(string ID);
         Task<List<SearchItem>> SimilarMovies(string ID);
+        string TimeConverter(int time);
         Task<List<SearchItem>> SimilarTV(string ID);
         Task<List<Video>> MoviesTrailers(string ID, string type);
         Task<BrowseItem> BrowseMovie(FirebaseItem item);

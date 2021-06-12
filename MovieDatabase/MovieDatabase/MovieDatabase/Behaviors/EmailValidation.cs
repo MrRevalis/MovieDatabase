@@ -20,7 +20,7 @@ namespace MovieDatabase.Behaviors
             bindable.TextChanged -= OnTextChanged;
         }
 
-        private void OnTextChanged(object sender, TextChangedEventArgs e)
+        public void OnTextChanged(object sender, TextChangedEventArgs e)
         {
             Entry entry = sender as Entry;
             string email = e.NewTextValue;
@@ -28,7 +28,8 @@ namespace MovieDatabase.Behaviors
 
             if (emailPattern.IsMatch(email))
             {
-                AppTheme appTheme = AppInfo.RequestedTheme;
+                //AppTheme appTheme = AppInfo.RequestedTheme;
+                AppTheme appTheme = AppTheme.Light;
                 switch (appTheme)
                 {
                     case AppTheme.Light:

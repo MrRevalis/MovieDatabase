@@ -90,7 +90,7 @@ namespace MovieDatabase.ViewModels
             }
         }
 
-        private async Task Search(string title)
+        public async Task Search(string title)
         {
             if (IsBusy)
                 return;

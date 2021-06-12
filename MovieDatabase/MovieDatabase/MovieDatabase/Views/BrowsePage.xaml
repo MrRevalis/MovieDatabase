@@ -43,13 +43,16 @@
             <Grid
                 Margin="10">
                 <CollectionView
+                    ItemSizingStrategy="MeasureAllItems"
                     ItemsSource="{Binding FavouriteItems}">
                     <CollectionView.ItemsLayout>
                         <GridItemsLayout
                             Orientation="Vertical"
-                            VerticalItemSpacing="20"/>
+                            VerticalItemSpacing="20"
+                            Span="{Binding Source={x:Reference browsePage}, Path=BindingContext.ItemSpan}"/>
                     </CollectionView.ItemsLayout>
 
+                    
                     <CollectionView.EmptyView>
                         <Grid>
                             <Label
@@ -148,11 +151,13 @@
             <Grid 
                 Margin="10">
                 <CollectionView
+                    ItemSizingStrategy="MeasureAllItems"
                     ItemsSource="{Binding RealisedItems}">
                     <CollectionView.ItemsLayout>
                         <GridItemsLayout
                             Orientation="Vertical"
-                            VerticalItemSpacing="20"/>
+                            VerticalItemSpacing="20"
+                            Span="{Binding Source={x:Reference browsePage}, Path=BindingContext.ItemSpan}"/>
                     </CollectionView.ItemsLayout>
                     <CollectionView.EmptyView>
                         <Grid>

@@ -20,15 +20,7 @@
     </ContentPage.Padding>
 
     <ContentPage.Content>
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition
-                    Height="Auto"/>
-                <RowDefinition
-                    Height="*"/>
-                <RowDefinition
-                    Height="60"/>
-            </Grid.RowDefinitions>
+        <StackLayout Orientation="{Binding Orientation}">
             <Frame
                 BorderColor="Transparent"
                 HasShadow="False"
@@ -55,10 +47,8 @@
                         HorizontalOptions="Center"/>
                 </StackLayout>
             </Frame>
-
             <Grid
-                Grid.Row="1"
-                VerticalOptions="Start"
+                VerticalOptions="FillAndExpand"
                 HorizontalOptions="FillAndExpand"
                 Margin="20"
                 RowSpacing="20">
@@ -68,6 +58,7 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="50"/>
                     <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <Label
                     Grid.Row="0"
@@ -77,6 +68,7 @@
                     VerticalOptions="Start"
                     HorizontalOptions="Center"/>
                 <cu:EntryIcon
+                    AutomationId="loginEntry"
                     Grid.Row="1"
                     Placeholder="Email"
                     Text="{Binding Email}"
@@ -86,12 +78,14 @@
                     </cu:EntryIcon.Behaviors>
                 </cu:EntryIcon>
                 <cu:EntryIcon
+                    AutomationId="passwordEntry"
                     Grid.Row="2"
                     IsPassword="True"
                     Placeholder="Password"
                     Text="{Binding Password}"
                     Image="{AppThemeBinding Dark=ic_action_lock_dark, Light=ic_action_lock_light}"/>
                 <Button
+                    AutomationId="loginButton"
                     Text="Login"
                     Command="{Binding Login}"
                     HorizontalOptions="Center"
@@ -114,14 +108,13 @@
                     Grid.Row="3"
                     InputTransparent="True"/>
                 <cu:InternetLabel Grid.Row="4"/>
-            </Grid>
-            <StackLayout
-                Grid.Row="2">
                 <Label
+                    Grid.Row="5"
+                    AutomationId="registerPage"
                     Text="Create new account"
                     FontSize="Body"
-                    VerticalOptions="FillAndExpand"
-                    VerticalTextAlignment="Center"
+                    VerticalOptions="End"
+                    VerticalTextAlignment="End"
                     HorizontalTextAlignment="Center">
                     <Label.GestureRecognizers>
                         <TapGestureRecognizer
@@ -136,7 +129,8 @@
                         </DataTrigger>
                     </Label.Triggers>
                 </Label>
-            </StackLayout>
-        </Grid>
+            </Grid>
+        </StackLayout>
     </ContentPage.Content>
+    
 </ContentPage>

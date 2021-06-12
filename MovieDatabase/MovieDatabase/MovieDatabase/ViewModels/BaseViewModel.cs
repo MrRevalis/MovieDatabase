@@ -60,15 +60,35 @@ namespace MovieDatabase.ViewModels
             set => SetProperty(ref isNotConnected, value);
         }
 
+        private StackOrientation orientation;
+        public StackOrientation Orientation
+        {
+            get => orientation;
+            set => SetProperty(ref orientation, value);
+        }
+
         public BaseViewModel()
         {
             Connectivity.ConnectivityChanged += ConnectionChanged;
             IsNotConnected = Connectivity.NetworkAccess != NetworkAccess.Internet;
+
+            DeviceDisplay.MainDisplayInfoChanged += OrientationChanged;
+        }
+
+        private void OrientationChanged(object sender, DisplayInfoChangedEventArgs e)
+        {
+            DisplayOrientation orientation = e.DisplayInfo.Orientation;
+            switch (orientation)
+            {
+                case DisplayOrientation.Portrait: Orientation = StackOrientation.Vertical; break;
+                case DisplayOrientation.Landscape: Orientation = StackOrientation.Horizontal; break;
+            }
         }
 
         ~BaseViewModel()
         {
             Connectivity.ConnectivityChanged -= ConnectionChanged;
+            DeviceDisplay.MainDisplayInfoChanged -= OrientationChanged;
         }
 
         private async void ConnectionChanged(object sender, ConnectivityChangedEventArgs e)

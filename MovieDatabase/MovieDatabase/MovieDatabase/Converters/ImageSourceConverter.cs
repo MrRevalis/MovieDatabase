@@ -16,7 +16,7 @@ namespace MovieDatabase.Converters
             string fileName = parameter as string == null ? "defaultCover.jpg" : parameter as string;
 
             if (value == null)
-                return ImageSource.FromResource($"InterestOrganiser.Resources.Images.{fileName}");
+                return ImageSource.FromResource($"MovieDatabase.Resources.Images.{fileName}");
             try
             {
                 var byteArray = Client.DownloadData(value.ToString());
@@ -24,7 +24,7 @@ namespace MovieDatabase.Converters
             }
             catch
             {
-                return ImageSource.FromResource($"InterestOrganiser.Resources.Images.{fileName}");
+                return ImageSource.FromResource($"MovieDatabase.Resources.Images.{fileName}");
             }
         }
 

@@ -294,6 +294,7 @@ namespace MovieDatabase.Services
                         Type = x.media_type == "movie" ? "movies" : "tv series",
                         Title = x.title ?? x.name,
                         Background = imageSource + x.backdrop_path,
+                        Poster = imageSource + x.poster_path
                     }).ToList();
 
                     return movies;
@@ -353,7 +354,7 @@ namespace MovieDatabase.Services
             return null;
         }
 
-        private string TimeConverter(int time)
+        public string TimeConverter(int time)
         {
             TimeSpan newTime = TimeSpan.FromMinutes(time);
             if (newTime.Hours == 0)
