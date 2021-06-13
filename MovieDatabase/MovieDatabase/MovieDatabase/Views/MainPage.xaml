@@ -175,7 +175,7 @@
                         </SwipeItems>
                     </SwipeView.RightItems>
 
-                    <CollectionView ItemsSource="{Binding ActualMovies}" ItemSizingStrategy="MeasureAllItems">
+                    <CollectionView ItemsSource="{Binding ActualMovies}" ItemSizingStrategy="MeasureAllItems" x:Name="collection">
                         <CollectionView.ItemsLayout>
                             <GridItemsLayout Orientation="Vertical" Span="3"/>
                         </CollectionView.ItemsLayout>

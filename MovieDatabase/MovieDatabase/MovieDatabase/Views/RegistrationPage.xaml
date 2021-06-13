@@ -11,7 +11,15 @@
     <ContentPage.BindingContext>
         <vm:RegistrationViewModel/>
     </ContentPage.BindingContext>
-
+    
+    <ContentPage.Padding>
+        <OnPlatform
+            x:TypeArguments="Thickness">
+            <OnPlatform.iOS>0, 20, 0, 0</OnPlatform.iOS>
+            <OnPlatform.Android>0, 0, 0, 0</OnPlatform.Android>
+        </OnPlatform>
+    </ContentPage.Padding>
+    
     <ContentPage.Resources>
         <ResourceDictionary>
             <cv:FirstValidationErrorConverter x:Key="FirstValidationErrorConverter"/>

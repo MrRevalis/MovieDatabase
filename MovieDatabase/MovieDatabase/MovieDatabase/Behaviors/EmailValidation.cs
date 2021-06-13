@@ -33,9 +33,9 @@ namespace MovieDatabase.Behaviors
                 switch (appTheme)
                 {
                     case AppTheme.Light:
-                        entry.TextColor = Color.Black; break;
-                    case AppTheme.Dark:
                         entry.TextColor = Color.White; break;
+                    case AppTheme.Dark:
+                        entry.TextColor = Color.Black; break;
                     default:
                         entry.TextColor = Color.Black; break;
                 }

@@ -18,7 +18,15 @@
             EventName="Appearing"
             Command="{Binding AppearingCommand}"/>
     </ContentPage.Behaviors>
-
+    
+    <ContentPage.Padding>
+        <OnPlatform
+            x:TypeArguments="Thickness">
+            <OnPlatform.iOS>0, 20, 0, 0</OnPlatform.iOS>
+            <OnPlatform.Android>0, 0, 0, 0</OnPlatform.Android>
+        </OnPlatform>
+    </ContentPage.Padding>
+    
     <ContentPage.Resources>
         <cv:ImageSourceConverter x:Key="ImageSourceConverter"/>
     </ContentPage.Resources>
