@@ -21,7 +21,8 @@ namespace MovieDatabase.ViewModels
         public ICommand AddRealised { get; private set; }
         public ICommand AddToRealise { get; private set; }
         public ICommand PlayVideoCommand { get; private set; }
-
+        //Egzamin
+        public ICommand ActorClickedCommand { get; private set; }
         private string type;
         public string Type
         {
@@ -70,6 +71,13 @@ namespace MovieDatabase.ViewModels
             get => itemDB;
             set => SetProperty(ref itemDB, value);
         }
+
+        private CastDetail selectedActor;
+        public CastDetail SelectedActor
+        {
+            get => selectedActor;
+            set => SetProperty(ref selectedActor, value);
+        }
         public DetailViewModel()
         {
             movieDB = DependencyService.Get<IMovieDB>();
@@ -82,7 +90,21 @@ namespace MovieDatabase.ViewModels
             AddRealised = new Command(async () => await AddRealisedItem());
             AddToRealise = new Command(async () => await AddToRealiseItem());
             PlayVideoCommand = new Command<string>(async (sender) => await PlayVideo(sender));
+
+            //Egzamin
+            ActorClickedCommand = new Command<CastDetail>(async (sender) => await ActorClicked(sender));
         }
+
+        //Egzamin
+        private async Task ActorClicked(CastDetail actor)
+        {
+            if (actor is null)
+                return;
+
+            SelectedActor = null;
+            await Shell.Current.GoToAsync($"actor?id={actor.ID}");
+        }
+
         private async Task PlayVideo(string link)
         {
             if (String.IsNullOrEmpty(link))

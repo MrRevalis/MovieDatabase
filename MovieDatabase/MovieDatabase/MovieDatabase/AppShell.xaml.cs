@@ -14,6 +14,9 @@ namespace MovieDatabase
             Routing.RegisterRoute("video", typeof(PlayerPage));
             Routing.RegisterRoute("registration", typeof(RegistrationPage));
             Routing.RegisterRoute("internet", typeof(NoInternetPage));
+
+            //Egzamin
+            Routing.RegisterRoute("actor", typeof(ActorPage));
         }
     }
 }

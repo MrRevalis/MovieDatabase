@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:MovieDatabase.ViewModels"
+             xmlns:system="clr-namespace:System;assembly=netstandard"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             xmlns:cu="clr-namespace:MovieDatabase.CustomControls"
+             xmlns:cv="clr-namespace:MovieDatabase.Converters"
+             Title="{Binding Actor.Name}"
+             x:Class="MovieDatabase.Views.ActorPage">
+
+    <ContentPage.Behaviors>
+        <xct:EventToCommandBehavior
+            EventName="Appearing"
+            Command="{Binding AppearingCommand}"/>
+    </ContentPage.Behaviors>
+    
+    <ContentPage.BindingContext>
+        <vm:ActorViewModel/>
+    </ContentPage.BindingContext>
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <cv:ImageSourceConverter x:Key="ImageSourceConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    
+    <ContentPage.Content>
+        <Grid>
+            <ScrollView>
+                <Grid
+                    Margin="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid
+                        Grid.Row="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="300"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Frame
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            Padding="0"
+                            CornerRadius="10">
+                            <Image
+                                Aspect="Fill"
+                                Source="{Binding Actor.Picture, Converter={StaticResource ImageSourceConverter}}"/>
+                        </Frame>
+                        <StackLayout
+                            Grid.Row="0"
+                            Grid.Column="1">
+                            <Label FontSize="Body">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="Name: " FontAttributes="Bold"></Span>
+                                        <Span Text="{Binding Actor.Name}"/>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                            <Label FontSize="Body">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="Birthday: " FontAttributes="Bold"></Span>
+                                        <Span Text="{Binding Actor.Birthday}"/>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                            <Label FontSize="Body">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="Place of birth: " FontAttributes="Bold"></Span>
+                                        <Span Text="{Binding Actor.PlaceOfBirth}"/>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                        </StackLayout>
+                    </Grid>
+                    <Label 
+                        Grid.Row="1"
+                        FontSize="Medium">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="Biography:" FontAttributes="Bold" FontSize="Medium"></Span>
+                                <Span Text="{x:Static system:Environment.NewLine}"></Span>
+                                <Span Text="{Binding Actor.Biography}" FontSize="Body"/>
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                </Grid>
+            </ScrollView>
+            <cu:LoadingScreen ShouldWork="{Binding IsBusy}"/>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

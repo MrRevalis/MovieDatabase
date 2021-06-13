@@ -1,4 +1,6 @@
 ﻿using MovieDatabase.Models;
+using MovieDatabase.Models.Actor;
+using MovieDatabase.Models.ActorMovies;
 using MovieDatabase.Models.Cast;
 using MovieDatabase.Models.Movie;
 using MovieDatabase.Models.MovieDetail;
@@ -85,6 +87,7 @@ namespace MovieDatabase.Services
                 {
                     return castResponse.cast.Select(x => new CastDetail
                     {
+                        ID = x.id,
                         Name = x.name,
                         Image = imageSource + x.profile_path
                     }).ToList();
@@ -315,6 +318,7 @@ namespace MovieDatabase.Services
                 {
                     return castResponse.cast.Select(x => new CastDetail
                     {
+                        ID = x.id,
                         Name = x.name,
                         Image = imageSource + x.profile_path
                     }).ToList();
@@ -353,6 +357,27 @@ namespace MovieDatabase.Services
 
             return null;
         }
+        public async Task<ActorDetail> Actor(int ID)
+        {
+            HttpResponseMessage response = await client.GetAsync($"person/{ID}?api_key={api}");
+            if (response.IsSuccessStatusCode)
+            {
+                string content = await response.Content.ReadAsStringAsync();
+                Actor actor = JsonConvert.DeserializeObject<Actor>(content);
+                if(actor != null)
+                {
+                    return new ActorDetail
+                    {
+                        Birthday = actor.birthday,
+                        Name = actor.name,
+                        Picture = imageSource + actor.profile_path,
+                        PlaceOfBirth = actor.place_of_birth,
+                        Biography = actor.biography
+                    };
+                }
+            }
+            return null;
+        }
 
         public string TimeConverter(int time)
         {
@@ -363,6 +388,52 @@ namespace MovieDatabase.Services
             }
             else
                 return $"{newTime.Hours}h {newTime.Minutes % 60}m";
+        }
+
+        public async Task<List<SearchItem>> MovieCredits(int ID)
+        {
+            HttpResponseMessage response = await client.GetAsync($"person/{ID}/movie_credits?api_key={api}");
+            if (response.IsSuccessStatusCode)
+            {
+                string content = await response.Content.ReadAsStringAsync();
+                ActorMovies actorResponse = JsonConvert.DeserializeObject<ActorMovies>(content);
+
+                if (actorResponse != null)
+                {
+                    return actorResponse.cast.Select(x => new SearchItem
+                    {
+                        ID = x.id.ToString(),
+                        Type = "movies",
+                        Title = x.original_title,
+                        Background = imageSource + x.backdrop_path,
+                        Poster = imageSource + x.poster_path
+                    }).ToList();
+                }
+            }
+            return new List<SearchItem>();
+        }
+
+        public async Task<List<SearchItem>> TvCredits(int ID)
+        {
+            HttpResponseMessage response = await client.GetAsync($"person/{ID}/tv_credits?api_key={api}");
+            if (response.IsSuccessStatusCode)
+            {
+                string content = await response.Content.ReadAsStringAsync();
+                ActorMovies actorResponse = JsonConvert.DeserializeObject<ActorMovies>(content);
+
+                if (actorResponse != null)
+                {
+                    return actorResponse.cast.Select(x => new SearchItem
+                    {
+                        ID = x.id.ToString(),
+                        Type = "tv series",
+                        Title = x.original_name,
+                        Background = imageSource + x.backdrop_path,
+                        Poster = imageSource + x.poster_path
+                    }).ToList();
+                }
+            }
+            return new List<SearchItem>();
         }
     }
 }

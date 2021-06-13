@@ -132,10 +132,15 @@
                         <Label
                             Text="Cast"
                             FontSize="Large"/>
+                        <!--Egzamin-->
                         <CollectionView
                             ItemSizingStrategy="MeasureAllItems"
                             ItemsSource="{Binding Item.Cast}"
                             ItemsLayout="HorizontalList"
+                            SelectionMode="Single"
+                            SelectionChangedCommand="{Binding ActorClickedCommand}"
+                            SelectionChangedCommandParameter="{Binding SelectedActor}"
+                            SelectedItem="{Binding SelectedActor, Mode=TwoWay}"
                             HeightRequest="170">
 
                             <CollectionView.EmptyView>

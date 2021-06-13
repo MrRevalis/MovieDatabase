@@ -23,5 +23,10 @@ namespace MovieDatabase.Services
         Task<List<Video>> MoviesTrailers(string ID, string type);
         Task<BrowseItem> BrowseMovie(FirebaseItem item);
         Task<BrowseItem> BrowseTV(FirebaseItem item);
+
+        //Egzamin
+        Task<ActorDetail> Actor(int ID);
+        Task<List<SearchItem>> MovieCredits(int ID);
+        Task<List<SearchItem>> TvCredits(int ID);
     }
 }
