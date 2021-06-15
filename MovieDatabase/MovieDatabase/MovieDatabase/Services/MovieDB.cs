@@ -18,7 +18,7 @@ namespace MovieDatabase.Services
     public class MovieDB : IMovieDB
     {
         private const string api = "fbfd2d53b7504d595ee9c450e52d4026";
-        private const string imageSource = "https://image.tmdb.org/t/p/w500";
+        private const string imageSource = "https://image.tmdb.org/t/p/w780";
         private HttpClient client;
         public MovieDB()
         {

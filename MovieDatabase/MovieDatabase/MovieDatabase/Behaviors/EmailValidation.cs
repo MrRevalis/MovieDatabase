@@ -28,16 +28,13 @@ namespace MovieDatabase.Behaviors
 
             if (emailPattern.IsMatch(email))
             {
-                //AppTheme appTheme = AppInfo.RequestedTheme;
-                AppTheme appTheme = AppTheme.Light;
+                AppTheme appTheme = AppInfo.RequestedTheme;
                 switch (appTheme)
                 {
                     case AppTheme.Light:
-                        entry.TextColor = Color.White; break;
+                        entry.TextColor = Color.Black; break;
                     case AppTheme.Dark:
-                        entry.TextColor = Color.Black; break;
-                    default:
-                        entry.TextColor = Color.Black; break;
+                        entry.TextColor = Color.White; break;
                 }
             }
             else

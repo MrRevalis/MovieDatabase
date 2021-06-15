@@ -66,6 +66,7 @@
     <AppExtensionDebugBundleId />
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="ClosingSearchBarRenderer.cs" />
     <Compile Include="CustomSearchBarRenderer.cs" />
     <Compile Include="EntryIconRenderer.cs" />
     <Compile Include="FirebaseAuthIOS.cs" />
@@ -283,5 +284,8 @@
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\backgroundGradient.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\ic_action_arrow_back.png" />
   </ItemGroup>
 </Project>

@@ -1,0 +1,83 @@
+﻿using Android.App;
+using Android.Content;
+using Android.Graphics;
+using Android.OS;
+using Android.Runtime;
+using Android.Views;
+using Android.Widget;
+using MovieDatabase.CustomControls;
+using MovieDatabase.Droid;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.Text;
+using Xamarin.Forms;
+using Xamarin.Forms.Platform.Android;
+
+[assembly: ExportRenderer(typeof(ClosingSearchBar), typeof(ClosingSearchBarRenderer))]
+namespace MovieDatabase.Droid
+{
+    public class ClosingSearchBarRenderer : SearchBarRenderer
+    {
+        public ClosingSearchBarRenderer(Context context) : base(context) { }
+
+        ClosingSearchBar searchBar;
+
+        protected override void OnElementChanged(ElementChangedEventArgs<SearchBar> e)
+        {
+            base.OnElementChanged(e);
+
+            if (e.OldElement != null || e.NewElement == null)
+                return;
+
+            searchBar = this.Element as ClosingSearchBar;
+
+            searchBar.Unfocused += SearchBar_Unfocused;
+
+            var searchIconId = Control.Resources.GetIdentifier("android:id/search_mag_icon", null, null);
+            if (searchIconId > 0)
+            {
+                var searchPlateIcon = Control.FindViewById(searchIconId);
+                (searchPlateIcon as ImageView).SetColorFilter(searchBar.ActualColor.ToAndroid(), PorterDuff.Mode.SrcIn);
+                (searchPlateIcon as ImageView).SetImageResource(Resource.Drawable.ic_action_arrow_back);
+                searchPlateIcon.Click += SearchPlateIcon_Click;
+            }
+
+            int searchCloseIconId = Control.Resources.GetIdentifier("android:id/search_close_btn", null, null);
+            if (searchCloseIconId > 0)
+            {
+                var closeIcon = Control.FindViewById(searchCloseIconId);
+                (closeIcon as ImageView).SetColorFilter(searchBar.ActualColor.ToAndroid(), PorterDuff.Mode.SrcIn);
+            }
+
+            LinearLayout linearLayout = Control.GetChildAt(0) as LinearLayout;
+            linearLayout = linearLayout.GetChildAt(2) as LinearLayout;
+            linearLayout = linearLayout.GetChildAt(1) as LinearLayout;
+            if (linearLayout != null)
+            {
+                linearLayout.Background.ClearColorFilter();
+                linearLayout.Background.SetColorFilter(searchBar.ActualColor.ToAndroid(), PorterDuff.Mode.SrcIn);
+            }
+        }
+
+        private void SearchPlateIcon_Click(object sender, EventArgs e)
+        {
+            searchBar.ShouldClosed = false;
+        }
+
+        private void SearchBar_Unfocused(object sender, FocusEventArgs e)
+        {
+            //searchBar = this.Element as ClosingSearchBar;
+            if(searchBar.Text.Length == 0)
+                searchBar.ShouldClosed = false;
+        }
+
+        protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            base.OnElementPropertyChanged(sender, e);
+
+            searchBar = this.Element as ClosingSearchBar;
+        }
+    }
+}

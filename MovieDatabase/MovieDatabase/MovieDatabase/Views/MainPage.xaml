@@ -175,7 +175,14 @@
                         </SwipeItems>
                     </SwipeView.RightItems>
 
-                    <CollectionView ItemsSource="{Binding ActualMovies}" ItemSizingStrategy="MeasureAllItems" x:Name="collection">
+                    <CollectionView 
+                        ItemsSource="{Binding ActualMovies}" 
+                        ItemSizingStrategy="MeasureAllItems" 
+                        x:Name="collection"
+                        SelectionMode="Single"
+                        SelectedItem="{Binding SelectedMovie, Mode=TwoWay}"
+                        SelectionChangedCommand="{Binding ChangePageCommand}"
+                        SelectionChangedCommandParameter="{Binding SelectedMovie}">
                         <CollectionView.ItemsLayout>
                             <GridItemsLayout Orientation="Vertical" Span="3"/>
                         </CollectionView.ItemsLayout>

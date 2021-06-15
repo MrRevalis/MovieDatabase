@@ -6,7 +6,6 @@
              xmlns:cu="clr-namespace:MovieDatabase.CustomControls"
              xmlns:cv="clr-namespace:MovieDatabase.Converters"
              x:Name="browsePage"
-             Title="Browse"
              x:Class="MovieDatabase.Views.BrowsePage">
 
     <ContentPage.BindingContext>
@@ -26,16 +25,56 @@
             <OnPlatform.Android>0, 0, 0, 0</OnPlatform.Android>
         </OnPlatform>
     </ContentPage.Padding>
-    
+
     <ContentPage.Resources>
         <cv:ImageSourceConverter x:Key="ImageSourceConverter"/>
     </ContentPage.Resources>
 
-    <ContentPage.ToolbarItems>
-        <ToolbarItem 
-            IconImageSource="ic_action_logout.png"
-            Command="{Binding SignOutCommand}"/>
-    </ContentPage.ToolbarItems>
+    <Shell.TitleView>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <cu:ClosingSearchBar 
+                Grid.Column="0" 
+                x:Name="searchBar"
+                ShouldClosed="{Binding SearchBarVisible, Mode=TwoWay}" 
+                IsVisible="{Binding SearchBarVisible, Mode=TwoWay}"
+                SearchCommand="{Binding FilterResultsCommand}"
+                SearchCommandParameter="{Binding Text, Source={x:Reference searchBar}}">
+                <cu:ClosingSearchBar.Behaviors>
+                    <xct:UserStoppedTypingBehavior
+                        Command="{Binding FilterResultsCommand}"
+                        StoppedTypingTimeThreshold="1000"
+                        MinimumLengthThreshold="2"
+                        ShouldDismissKeyboardAutomatically="True"/>
+                </cu:ClosingSearchBar.Behaviors>
+            </cu:ClosingSearchBar>
+            <Label Grid.Column="0" Text="Browse" FontSize="Medium" FontAttributes="Bold" TextColor="White" VerticalTextAlignment="Center" HorizontalTextAlignment="Start">
+                <Label.Triggers>
+                    <DataTrigger
+                        TargetType="Label"
+                        Binding="{Binding SearchBarVisible}"
+                        Value="True">
+                        <Setter Property="IsVisible" Value="False"/>
+                    </DataTrigger>
+                </Label.Triggers>
+            </Label>
+            <ImageButton Grid.Column="1" Source="ic_action_search.png" Scale="0.85" BackgroundColor="Transparent" Command="{Binding ShowSearchBarCommand}">
+                <ImageButton.Triggers>
+                    <DataTrigger
+                        TargetType="ImageButton"
+                        Binding="{Binding SearchBarVisible}"
+                        Value="True">
+                        <Setter Property="IsVisible" Value="False"/>
+                    </DataTrigger>
+                </ImageButton.Triggers>
+            </ImageButton>
+            <ImageButton Grid.Column="2" Source="ic_action_logout.png" Scale="0.85" BackgroundColor="Transparent" Command="{Binding SignOutCommand}"/>
+        </Grid>
+    </Shell.TitleView>
 
     <xct:TabView
         TabIndicatorPlacement="Bottom"

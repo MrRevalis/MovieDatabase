@@ -64,6 +64,13 @@ namespace MovieDatabase.ViewModels
             set => SetProperty(ref moviesCollection, value);
         }
 
+        private SearchItem selectedMovie;
+        public SearchItem SelectedMovie
+        {
+            get => selectedMovie;
+            set => SetProperty(ref selectedMovie, value);
+        }
+
         #endregion
 
         public MainViewModel()
@@ -120,6 +127,8 @@ namespace MovieDatabase.ViewModels
         {
             if (item == null)
                 return;
+
+            SelectedMovie = null;
 
             Preferences.Set("LastItem", item.ID);
             Preferences.Set("LastType", item.Type);

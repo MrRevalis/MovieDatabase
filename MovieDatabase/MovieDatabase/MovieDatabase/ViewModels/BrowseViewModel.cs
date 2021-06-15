@@ -1,5 +1,6 @@
 ﻿using MovieDatabase.Models;
 using MovieDatabase.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -21,6 +22,9 @@ namespace MovieDatabase.ViewModels
         public ICommand ChangePageCommand { get; private set; }
         public ICommand AddRealisedCommand { get; private set; }
         public ICommand AddFavouriteCommand { get; private set; }
+        //Egzamin
+        public ICommand ShowSearchBarCommand { get; private set; }
+        public ICommand FilterResultsCommand { get; private set; }
 
         private ObservableRangeCollection<BrowseItem> favouriteItems;
         public ObservableRangeCollection<BrowseItem> FavouriteItems
@@ -43,6 +47,16 @@ namespace MovieDatabase.ViewModels
             set => SetProperty(ref itemSpan, value);
         }
 
+        //Egzamin
+        private bool searchBarVisible = false;
+        public bool SearchBarVisible
+        {
+            get => searchBarVisible;
+            set => SetProperty(ref searchBarVisible, value);
+        }
+
+        private List<BrowseItem> tempRealisedItems;
+        private List<BrowseItem> tempFavouriteItems;
 
         public BrowseViewModel()
         {
@@ -61,6 +75,43 @@ namespace MovieDatabase.ViewModels
             username = FirebaseAuth.GetUserName();
 
             this.PropertyChanged += BrowsePropertyChanged;
+
+            //Egzamin
+            ShowSearchBarCommand = new Command(ShowSearchBar);
+            FilterResultsCommand = new Command<string>(async (sender) => await FilterResults(sender));
+        }
+
+        private async Task FilterResults(string text)
+        {
+            if (String.IsNullOrEmpty(text))
+                return;
+
+            tempRealisedItems = RealisedItems.ToList();
+            tempFavouriteItems = FavouriteItems.ToList();
+
+            string title = text.ToLower();
+
+            var listTemp = RealisedItems.Select(x => x).Where(x => x.Title.ToLower().Contains(title)).ToList();
+            RealisedItems.Clear();
+            RealisedItems.AddRange(listTemp);
+
+            listTemp = FavouriteItems.Select(x => x).Where(x => x.Title.ToLower().Contains(title)).ToList();
+            FavouriteItems.Clear();
+            FavouriteItems.AddRange(listTemp);
+        }
+
+        private void ReturnResults()
+        {
+            RealisedItems.Clear();
+            FavouriteItems.Clear();
+
+            RealisedItems.AddRange(tempRealisedItems);
+            FavouriteItems.AddRange(tempFavouriteItems);
+        }
+
+        private void ShowSearchBar()
+        {
+            SearchBarVisible = true;
         }
 
         private void BrowsePropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)

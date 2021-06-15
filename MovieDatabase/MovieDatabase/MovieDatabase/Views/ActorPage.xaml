@@ -33,7 +33,7 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="310"/>
                     </Grid.RowDefinitions>
                     <Grid
                         Grid.Row="0">
@@ -94,6 +94,48 @@
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>
+                    <CollectionView
+                        Grid.Row="2"
+                        ItemsSource="{Binding ActorMovies}"
+                        ItemsLayout="HorizontalList"
+                        ItemSizingStrategy="MeasureAllItems"
+                        SelectionMode="Single"
+                        SelectedItem="{Binding SelectedMovie, Mode=TwoWay}"
+                        SelectionChangedCommand="{Binding MovieClickedCommand}"
+                        SelectionChangedCommandParameter="{Binding SelectedMovie}">
+                        <CollectionView.EmptyView>
+                            <Grid>
+                                <Label
+                                    Text="Empty list"
+                                    HorizontalOptions="Center"/>
+                            </Grid>
+                        </CollectionView.EmptyView>
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Frame
+                                    Padding="0"
+                                    BackgroundColor="Transparent"
+                                    WidthRequest="200">
+                                    <Grid 
+                                        Margin="5">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="250"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+                                        <Image
+                                            Grid.Row="0"
+                                            Source="{Binding Poster, Converter={StaticResource ImageSourceConverter}}"
+                                            Aspect="Fill"/>
+                                        <Label
+                                            Grid.Row="1"
+                                            Text="{Binding Title}"
+                                            HorizontalTextAlignment="Center"
+                                            FontAttributes="Bold"/>
+                                    </Grid>
+                                </Frame>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
                 </Grid>
             </ScrollView>
             <cu:LoadingScreen ShouldWork="{Binding IsBusy}"/>

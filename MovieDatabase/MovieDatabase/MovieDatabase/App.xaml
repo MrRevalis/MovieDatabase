@@ -63,7 +63,14 @@
                 <Setter Property="BackgroundColor" Value="{AppThemeBinding Dark={StaticResource backgroundDark}, Light={StaticResource backgroundLight}}"/>
             </Style>
 
-
+            <Style TargetType="cu:ClosingSearchBar">
+                <Setter Property="BackgroundColor" Value="#0DFFFFFF"/>
+                <Setter Property="PlaceholderColor" Value="White"/>
+                <Setter Property="ActualColor" Value="White"/>
+                <Setter Property="TextColor" Value="White"/>
+                <Setter Property="BackgroundColor" Value="Transparent"/>
+            </Style>
+            
             <Style TargetType="Label" x:Key="ErrorTextStyle">
                 <Setter Property="TextColor" Value="{StaticResource red}"/>
                 <Setter Property="FontSize" Value="12"/>
