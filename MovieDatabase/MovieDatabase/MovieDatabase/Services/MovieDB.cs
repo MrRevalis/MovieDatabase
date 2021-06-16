@@ -435,5 +435,27 @@ namespace MovieDatabase.Services
             }
             return new List<SearchItem>();
         }
+
+        public async Task<List<SearchItem>> DiscoverMovies()
+        {
+            HttpResponseMessage response = await client.GetAsync($"discover/movie?api_key={api}");
+            if (response.IsSuccessStatusCode)
+            {
+                string content = await response.Content.ReadAsStringAsync();
+                Movie discoverResponse = JsonConvert.DeserializeObject<Movie>(content);
+                if (discoverResponse.results.Any())
+                {
+                    return discoverResponse.results.Select(x => new SearchItem
+                    {
+                        ID = x.id.ToString(),
+                        Type = "movies",
+                        Title = x.title,
+                        Background = imageSource + x.backdrop_path,
+                        Poster = imageSource + x.poster_path
+                    }).ToList();
+                }
+            }
+            return new List<SearchItem>();
+        }
     }
 }

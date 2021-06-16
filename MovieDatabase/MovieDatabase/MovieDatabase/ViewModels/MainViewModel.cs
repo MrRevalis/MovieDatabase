@@ -150,6 +150,21 @@ namespace MovieDatabase.ViewModels
                 TrendingList.AddRange(trending.Take(amount));
             }
 
+            //Egzamin
+            List<SearchItem> discover = await MovieDB.DiscoverMovies();
+            if(discover != null && discover.Any())
+            {
+                List<SearchItem> uniqueMovies = new List<SearchItem>();
+                foreach(SearchItem item in discover)
+                {
+                    if (!TrendingList.Any(x => x.ID == item.ID))
+                        uniqueMovies.Add(item);
+                }
+                int moviesAmount = uniqueMovies.Count < 5 ? uniqueMovies.Count : 5;
+                TrendingList.AddRange(uniqueMovies.Take(moviesAmount));
+
+            }
+
             if (!MoviesCollection.Any())
             {
                 await CompleteCarousel();

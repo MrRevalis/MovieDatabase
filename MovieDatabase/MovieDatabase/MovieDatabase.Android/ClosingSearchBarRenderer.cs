@@ -63,6 +63,7 @@ namespace MovieDatabase.Droid
 
         private void SearchPlateIcon_Click(object sender, EventArgs e)
         {
+            searchBar.Text = "";
             searchBar.ShouldClosed = false;
         }
 

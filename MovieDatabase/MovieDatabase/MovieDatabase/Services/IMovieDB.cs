@@ -28,5 +28,7 @@ namespace MovieDatabase.Services
         Task<ActorDetail> Actor(int ID);
         Task<List<SearchItem>> MovieCredits(int ID);
         Task<List<SearchItem>> TvCredits(int ID);
+
+        Task<List<SearchItem>> DiscoverMovies();
     }
 }

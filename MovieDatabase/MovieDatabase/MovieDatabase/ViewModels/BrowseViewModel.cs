@@ -55,8 +55,8 @@ namespace MovieDatabase.ViewModels
             set => SetProperty(ref searchBarVisible, value);
         }
 
-        private List<BrowseItem> tempRealisedItems;
-        private List<BrowseItem> tempFavouriteItems;
+        private List<BrowseItem> _realisedItems;
+        private List<BrowseItem> _favouriteItems;
 
         public BrowseViewModel()
         {
@@ -79,6 +79,7 @@ namespace MovieDatabase.ViewModels
             //Egzamin
             ShowSearchBarCommand = new Command(ShowSearchBar);
             FilterResultsCommand = new Command<string>(async (sender) => await FilterResults(sender));
+          
         }
 
         private async Task FilterResults(string text)
@@ -86,27 +87,31 @@ namespace MovieDatabase.ViewModels
             if (String.IsNullOrEmpty(text))
                 return;
 
-            tempRealisedItems = RealisedItems.ToList();
-            tempFavouriteItems = FavouriteItems.ToList();
+            if(_realisedItems != null && _favouriteItems != null)
+            {
+                RealisedItems.AddRange(_realisedItems);
+                FavouriteItems.AddRange(_favouriteItems);
+
+                _realisedItems = null;
+                _favouriteItems = null;
+
+                RealisedItems = new ObservableRangeCollection<BrowseItem>(RealisedItems.OrderBy(x => x.Title).ToList());
+                FavouriteItems = new ObservableRangeCollection<BrowseItem>(FavouriteItems.OrderBy(x => x.Title).ToList());
+            }
+
 
             string title = text.ToLower();
 
-            var listTemp = RealisedItems.Select(x => x).Where(x => x.Title.ToLower().Contains(title)).ToList();
+            var realisedQuery = RealisedItems.Select(x => x).Where(x => x.Title.ToLower().Contains(title)).ToList();
+            var favouriteQuery = FavouriteItems.Select(x => x).Where(x => x.Title.ToLower().Contains(title)).ToList();
+
+            _realisedItems = RealisedItems.Except(realisedQuery).ToList();
+            _favouriteItems = FavouriteItems.Except(favouriteQuery).ToList();
+
             RealisedItems.Clear();
-            RealisedItems.AddRange(listTemp);
-
-            listTemp = FavouriteItems.Select(x => x).Where(x => x.Title.ToLower().Contains(title)).ToList();
+            RealisedItems.AddRange(realisedQuery);
             FavouriteItems.Clear();
-            FavouriteItems.AddRange(listTemp);
-        }
-
-        private void ReturnResults()
-        {
-            RealisedItems.Clear();
-            FavouriteItems.Clear();
-
-            RealisedItems.AddRange(tempRealisedItems);
-            FavouriteItems.AddRange(tempFavouriteItems);
+            FavouriteItems.AddRange(favouriteQuery);
         }
 
         private void ShowSearchBar()
@@ -123,7 +128,22 @@ namespace MovieDatabase.ViewModels
                     case StackOrientation.Horizontal: ItemSpan = 2; break;
                     case StackOrientation.Vertical: ItemSpan = 1; break;
                     default:
-                        ItemSpan = 1;break;
+                        ItemSpan = 1; break;
+                }
+            }
+
+            if(e.PropertyName == "SearchBarVisible")
+            {
+                if(SearchBarVisible == false)
+                {
+                    RealisedItems.AddRange(_realisedItems);
+                    FavouriteItems.AddRange(_favouriteItems);
+
+                    _realisedItems = null;
+                    _favouriteItems = null;
+
+                    RealisedItems = new ObservableRangeCollection<BrowseItem>(RealisedItems.OrderBy(x => x.Title).ToList());
+                    FavouriteItems = new ObservableRangeCollection<BrowseItem>(FavouriteItems.OrderBy(x => x.Title).ToList());
                 }
             }
         }

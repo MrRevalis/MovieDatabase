@@ -10,13 +10,13 @@ namespace MovieDatabase.ViewModels
         public ICommand Login { get; }
         public ICommand Register { get; }
 
-        private string email = "dominikr26@interia.pl";
+        private string email;
         public string Email
         {
             get => email;
             set => SetProperty(ref email, value);
         }
-        private string password = "123456";
+        private string password;
         public string Password
         {
             get => password;

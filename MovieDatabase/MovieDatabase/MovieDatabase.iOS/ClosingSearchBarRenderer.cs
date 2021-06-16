@@ -38,6 +38,7 @@ namespace MovieDatabase.iOS
             var control = this.Element as ClosingSearchBar;
 
             if (searchBar.Text.Length == 0)
+                control.Text = "";
                 control.ShouldClosed = false;
         }
     }
